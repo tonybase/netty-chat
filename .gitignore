@@ -1,0 +1,11 @@
+# Build artifacts
+artifacts
+target
+
+# IDE & module files
+.idea
+*.iml
+.project
+.settings
+.classpath
+workspace.xml
