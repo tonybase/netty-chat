@@ -44,18 +44,17 @@ public class UserHandler extends IMHandler {
     }
 
     private void login(IMConnection connection, IMRequest request) {
-        User user = new User();
-        user.decode(request.getData());
-
+        User user = request.readEntity(User.class);
         boolean isSuccess = userService.login(user);
+
         IMResponse resp = new IMResponse();
         Header header = new Header();
         if (isSuccess) {
             header.setHandlerId(getId());
             header.setCommandId(Commands.LOGIN_SUCCESS);
             resp.setHeader(header);
-            resp.writeData(userService.loadUser(user).encode());
-            resp.writeData(userService.getUserDetailById(user.getId()).encode());
+            resp.writeEntity(userService.loadUser(user));
+            resp.writeEntity(userService.getUserDetailById(user.getId()));
         } else {
             header.setHandlerId(getId());
             header.setCommandId(Commands.LOGIN_FAIL);

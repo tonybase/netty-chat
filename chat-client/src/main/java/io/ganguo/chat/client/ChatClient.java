@@ -52,13 +52,13 @@ public class ChatClient {
         header.setHandlerId(Handlers.USER);
         header.setCommandId(Commands.LOGIN_REQUEST);
         resp.setHeader(header);
-        resp.setData(user.encode());
+        resp.writeEntity(user);
 
         channel.writeAndFlush(resp);
     }
 
     public static void main(String[] args) throws Exception {
-        // for (int i = 0; i < 5; i++) {
+        // for (int i = 0; i < 100000; i++) {
         new ChatClient("localhost", 9090).run();
         // }
     }

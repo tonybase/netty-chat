@@ -8,20 +8,18 @@ import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 
 public class PacketDecoder extends LengthFieldBasedFrameDecoder {
 
-	/**
-	 * @param maxFrameLength
-	 * @param lengthFieldOffset
-	 * @param lengthFieldLength
-	 */
-	public PacketDecoder(int maxFrameLength, int lengthFieldOffset, int lengthFieldLength) {
-		super(maxFrameLength, lengthFieldOffset, lengthFieldLength);
-	}
+    /**
+     * @param maxFrameLength
+     * @param lengthFieldOffset
+     * @param lengthFieldLength
+     */
+    public PacketDecoder(int maxFrameLength, int lengthFieldOffset, int lengthFieldLength) {
+        super(maxFrameLength, lengthFieldOffset, lengthFieldLength);
+    }
 
-	@Override
-	protected Object decode(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
-		IMRequest request = new IMRequest();
-		request.decode(new DataBuffer(in));
-		return request;
-	}
+    @Override
+    protected Object decode(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
+        return new IMRequest(new DataBuffer(in));
+    }
 
 }

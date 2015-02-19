@@ -1,6 +1,3 @@
-/**
- * 
- */
 package io.ganguo.chat.core.handler;
 
 import java.util.HashMap;

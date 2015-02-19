@@ -12,7 +12,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class ChatServer {
 
-    private static final int PORT = 9090;
+    private final int PORT;
+
+    public ChatServer() {
+        PORT = 9090;
+    }
+
+    public ChatServer(int port) {
+        PORT = port;
+    }
 
     /**
      * netty
