@@ -39,7 +39,14 @@ public class IMRequest {
         mData = data;
     }
 
-    public <T extends Entity> T readEntity(Class<T> entityClass) {
+    /**
+     * 读取对象
+     *
+     * @param entityClass
+     * @param <T>
+     * @return
+     */
+    public <T extends IMSerializer> T readEntity(Class<T> entityClass) {
         try {
             T entity = entityClass.newInstance();
             readEntity(entity);
@@ -50,10 +57,24 @@ public class IMRequest {
         return null;
     }
 
-    public <T extends Entity> void readEntity(T entity) {
-        entity.decode(mData);
+    /**
+     * 读取对象
+     *
+     * @param entity
+     * @param <T>
+     * @return
+     */
+    public <T extends IMSerializer> T readEntity(T entity) {
+        entity.decode(mData, mHeader.getVersion());
+        return entity;
     }
 
+
+    /**
+     * Length | Header | Actual Content
+     *
+     * @param buffer
+     */
     public void decode(DataBuffer buffer) {
         if (buffer != null) {
             try {
@@ -62,7 +83,7 @@ public class IMRequest {
                 // header
                 mHeader = new Header();
                 mHeader.setLength(length);
-                mHeader.decode(buffer);
+                mHeader.decode(buffer, mHeader.getVersion());
                 // data
                 mData = buffer.readDataBuffer();
             } catch (Exception e) {

@@ -1,117 +1,108 @@
 package io.ganguo.chat.biz.entity;
 
-import io.ganguo.chat.biz.bean.Gender;
-import io.ganguo.chat.biz.bean.Presence;
-import io.ganguo.chat.core.transport.DataBuffer;
-import io.ganguo.chat.core.transport.Entity;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-public class User extends Entity {
-	private long id;
-	private String account;
-	private String password;
-	private String authToken;
-	private String avatarUrl;
-	private String nickName;
-	private Gender gender = Gender.UNKNOUWN;
-	private Presence presence = Presence.UNAVAILABLE;
+import java.math.BigInteger;
 
-	public long getId() {
-		return id;
-	}
+@Document
+public class User extends BaseEntity {
+    @Indexed(unique = true)
+    private long uin;
+    @Indexed(unique = true)
+    private String account;
+    private String password;
+    private String avatarUrl;
+    private String nickName;
+    private byte gender;
+    private byte presence;
+    private byte clientType;
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    private BigInteger userDetailId;
 
-	public String getAccount() {
-		return account;
-	}
+    public long getUin() {
+        return uin;
+    }
 
-	public void setAccount(String account) {
-		this.account = account;
-	}
+    public void setUin(long uin) {
+        this.uin = uin;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getAccount() {
+        return account;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setAccount(String account) {
+        this.account = account;
+    }
 
-	public String getAuthToken() {
-		return authToken;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public void setAuthToken(String authToken) {
-		this.authToken = authToken;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public String getNickName() {
-		return nickName;
-	}
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
 
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
-	}
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
 
-	public String getAvatarUrl() {
-		return avatarUrl;
-	}
+    public String getNickName() {
+        return nickName;
+    }
 
-	public void setAvatarUrl(String avatarUrl) {
-		this.avatarUrl = avatarUrl;
-	}
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
 
-	public Gender getGender() {
-		return gender;
-	}
+    public byte getGender() {
+        return gender;
+    }
 
-	public void setGender(Gender gender) {
-		this.gender = gender;
-	}
+    public void setGender(byte gender) {
+        this.gender = gender;
+    }
 
-	public Presence getPresence() {
-		return presence;
-	}
+    public byte getPresence() {
+        return presence;
+    }
 
-	public void setPresence(Presence presence) {
-		this.presence = presence;
-	}
+    public void setPresence(byte presence) {
+        this.presence = presence;
+    }
 
-	@Override
-	public short version() {
-		return 0;
-	}
+    public byte getClientType() {
+        return clientType;
+    }
 
-	@Override
-	public DataBuffer encode() {
-		DataBuffer data = new DataBuffer();
-		data.writeShort(version());
-		data.writeLong(id);
-		data.writeString(account);
-		data.writeString(password);
-		data.writeString(authToken);
-		data.writeString(nickName);
-		data.writeString(avatarUrl);
-		data.writeByte(gender.getValue());
-		data.writeByte(presence.getValue());
-		return data;
-	}
+    public void setClientType(byte clientType) {
+        this.clientType = clientType;
+    }
 
-	@Override
-	public void decode(DataBuffer data) {
-		setVersion(data.readShort());
-		if (getVersion() == version()) {
-			id = data.readLong();
-			account = data.readString();
-			password = data.readString();
-			authToken = data.readString();
-			nickName = data.readString();
-			avatarUrl = data.readString();
-			gender = Gender.valueOfRaw(data.readByte());
-			presence = Presence.valueOfRaw(data.readByte());
-		}
-	}
+    public BigInteger getUserDetailId() {
+        return userDetailId;
+    }
 
+    public void setUserDetailId(BigInteger userDetailId) {
+        this.userDetailId = userDetailId;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "uin=" + uin +
+                ", account='" + account + '\'' +
+                ", password='" + password + '\'' +
+                ", avatarUrl='" + avatarUrl + '\'' +
+                ", nickName='" + nickName + '\'' +
+                ", gender=" + gender +
+                ", presence=" + presence +
+                ", userDetailId=" + userDetailId +
+                '}';
+    }
 }

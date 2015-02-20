@@ -11,17 +11,21 @@ import io.netty.channel.ChannelHandlerContext;
  * @createAt Feb 17, 2015
  */
 public class IMConnection {
-    private Integer mId;
+    private Long mUin;
     private ChannelHandlerContext mContext;
     private volatile boolean isKilled = false;
 
-    public IMConnection(int id, ChannelHandlerContext ctx) {
-        mId = id;
+    public IMConnection(Long uin, ChannelHandlerContext ctx) {
+        mUin = uin;
         mContext = ctx;
     }
 
-    public Integer getId() {
-        return mId;
+    public void setUin(Long uin) {
+        mUin = uin;
+    }
+
+    public Long getUin() {
+        return mUin;
     }
 
     public Channel getChannel() {

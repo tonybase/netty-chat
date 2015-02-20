@@ -32,21 +32,31 @@ public class IMResponse {
     }
 
     /**
-     * append data
+     * 写入对象
      *
-     * @param data
+     * @param buffer
      */
-    public void writeData(DataBuffer data) {
+    public void writeData(DataBuffer buffer) {
         if (mData == null) {
             mData = new DataBuffer();
         }
-        mData.writeDataBuffer(data);
+        mData.writeDataBuffer(buffer);
     }
 
-    public void writeEntity(Entity entity) {
-        writeData(entity.encode());
+    /**
+     * 写入对象
+     *
+     * @param IMSerializer
+     */
+    public void writeEntity(IMSerializer IMSerializer) {
+        writeData(IMSerializer.encode(mHeader.getVersion()));
     }
 
+    /**
+     * Length | Header | Actual Content
+     *
+     * @return buffer
+     */
     public DataBuffer encode() {
         try {
 
@@ -59,7 +69,7 @@ public class IMResponse {
             buffer.writeInt(length);
             // header
             mHeader.setLength(length);
-            buffer.writeDataBuffer(mHeader.encode());
+            buffer.writeDataBuffer(mHeader.encode(mHeader.getVersion()));
             // data
             buffer.writeDataBuffer(mData);
 

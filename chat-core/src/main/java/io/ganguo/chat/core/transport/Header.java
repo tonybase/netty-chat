@@ -1,15 +1,13 @@
 package io.ganguo.chat.core.transport;
 
-import io.ganguo.chat.core.transport.Entity;
-
 /**
  * TCP协议的头文件
  */
-public class Header extends Entity {
+public class Header implements IMSerializer {
     public static final int PROTOCOL_HEADER_LENGTH = 8;
 
-    private int length = PROTOCOL_HEADER_LENGTH; // 数据包长度，包括包头长度
-
+    private int length; // 数据包长度，包括包头长度
+    private short version;
     private short handlerId; // SID
     private short commandId; // CID
     private short reserved; // 保留，可用于如序列号等
@@ -20,6 +18,14 @@ public class Header extends Entity {
 
     public void setLength(int length) {
         this.length = length;
+    }
+
+    public short getVersion() {
+        return version;
+    }
+
+    public void setVersion(short version) {
+        this.version = version;
     }
 
     public short getHandlerId() {
@@ -47,14 +53,9 @@ public class Header extends Entity {
     }
 
     @Override
-    public short version() {
-        return 0;
-    }
-
-    @Override
-    public DataBuffer encode() {
+    public DataBuffer encode(short version) {
         DataBuffer data = new DataBuffer(PROTOCOL_HEADER_LENGTH);
-        data.writeShort(version());
+        data.writeShort(version);
         data.writeShort(handlerId);
         data.writeShort(commandId);
         data.writeShort(reserved);
@@ -62,18 +63,21 @@ public class Header extends Entity {
     }
 
     @Override
-    public void decode(DataBuffer data) {
-        setVersion(data.readShort());
-        if (getVersion() == version()) {
-            handlerId = data.readShort();
-            commandId = data.readShort();
-            reserved = data.readShort();
-        }
+    public void decode(DataBuffer data, short ver) {
+        version = data.readShort();
+        handlerId = data.readShort();
+        commandId = data.readShort();
+        reserved = data.readShort();
     }
 
     @Override
     public String toString() {
-        return "Header [length=" + length + ", handlerId=" + handlerId + ", commandId=" + commandId + ", reserved=" + reserved + "]";
+        return "Header{" +
+                "length=" + length +
+                ", version=" + version +
+                ", handlerId=" + handlerId +
+                ", commandId=" + commandId +
+                ", reserved=" + reserved +
+                '}';
     }
-
 }

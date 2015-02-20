@@ -6,17 +6,9 @@
 | :----: |:-------:| :-------------:|
 | 4byte  | 8byte   |   data length  |
 
-**Entity:**<br>
-
-| Version | Properties Content |
-| :-----: | :-----------------:|
-| 2byte   | data length  |
-
-> version(); // 当前实体类版本，当属性有改变时可以通过版本号控制序列化<br>
-> encode();  // 序列化，以byte[]方式写入到DataBuffer中<br>
-> decode(DataBuffer); // 反序列化，通过DataBuffer转换成Entity<br>
-  
 **Header:**<br>
+
+> version   协议版本号，当协议有改变，以及entity属性有改变时通过版本号进行序列化操作。<br>
 > handlerId 业务分发处理，IMHandlerManager.find(handlerId)，通过handler去处理客户端请求命令。<br>
 > commandId 命令动作处理，IMHandler.dispatch(IMConnection, IMRequest)，对IMRequest处理，IMConnection应答或者kill。<br>
 > reserved  数据序列处理，对Actual Content进行加解密类型，以及序列化反序列化方式。<br>
@@ -27,7 +19,7 @@
   
 ##### 服务端应答，通过writeEntity写入对象数据，可以连续写入多个Entity
 **IMResponse:**<br>
-> writeEntity(entity);<br>
+> writeEntity(IMSerializer);<br>
 
 ##### 长连接，发送数据内容，控制客户端连接
 **IMConnection:**<br>

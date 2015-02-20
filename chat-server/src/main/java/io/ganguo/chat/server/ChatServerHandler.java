@@ -14,36 +14,36 @@ import org.slf4j.LoggerFactory;
 
 public class ChatServerHandler extends SimpleChannelInboundHandler<IMRequest> {
 
-	private Logger logger = LoggerFactory.getLogger(ChatServerHandler.class);
+    private Logger logger = LoggerFactory.getLogger(ChatServerHandler.class);
 
-	private final ConnectionManager mConnectionManager = ConnectionManager.getInstance();
+    private final ConnectionManager mConnectionManager = ConnectionManager.getInstance();
 
-	@Override
-	public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
-		mConnectionManager.create(ctx);
+    @Override
+    public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
+        mConnectionManager.create(ctx);
 
-		logger.info("handlerAdded " + mConnectionManager.count());
-	}
+        logger.info("handlerAdded " + mConnectionManager.count());
+    }
 
-	@Override
-	public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
-		mConnectionManager.remove(ctx);
+    @Override
+    public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
+        mConnectionManager.remove(ctx);
 
-		logger.info("handlerRemoved " + mConnectionManager.count());
-	}
+        logger.info("handlerRemoved " + mConnectionManager.count());
+    }
 
-	@Override
-	protected void messageReceived(ChannelHandlerContext ctx, IMRequest request) throws Exception {
-		logger.info("messageReceived header:" + request.getHeader());
+    @Override
+    protected void messageReceived(ChannelHandlerContext ctx, IMRequest request) throws Exception {
+        logger.info("messageReceived header:" + request.getHeader());
 
-		IMConnection conn = mConnectionManager.find(ctx);
-		Header header = request.getHeader();
+        IMConnection conn = mConnectionManager.find(ctx);
+        Header header = request.getHeader();
 
-		IMHandler handler = IMHandlerManager.getInstance().find(header.getHandlerId());
-		if (handler != null) {
-			handler.dispatch(conn, request);
-		} else {
-			logger.warn("Not found handlerId: " + header.getHandlerId());
-		}
-	}
+        IMHandler handler = IMHandlerManager.getInstance().find(header.getHandlerId());
+        if (handler != null) {
+            handler.dispatch(conn, request);
+        } else {
+            logger.warn("Not found handlerId: " + header.getHandlerId());
+        }
+    }
 }
