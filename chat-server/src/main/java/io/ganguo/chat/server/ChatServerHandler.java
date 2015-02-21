@@ -7,6 +7,7 @@ import io.ganguo.chat.core.handler.IMHandlerManager;
 import io.ganguo.chat.core.transport.Header;
 import io.ganguo.chat.core.transport.IMRequest;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelPromise;
 import io.netty.channel.SimpleChannelInboundHandler;
 
 import org.slf4j.Logger;
@@ -20,6 +21,8 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<IMRequest> {
 
     @Override
     public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
+        super.handlerAdded(ctx);
+
         mConnectionManager.create(ctx);
 
         logger.info("handlerAdded " + mConnectionManager.count());
@@ -27,6 +30,8 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<IMRequest> {
 
     @Override
     public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
+        super.handlerRemoved(ctx);
+
         mConnectionManager.remove(ctx);
 
         logger.info("handlerRemoved " + mConnectionManager.count());

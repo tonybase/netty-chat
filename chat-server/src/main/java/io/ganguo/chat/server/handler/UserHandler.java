@@ -14,6 +14,7 @@ import io.ganguo.chat.core.transport.Header;
 import io.ganguo.chat.core.transport.IMRequest;
 import io.ganguo.chat.core.transport.IMResponse;
 import io.ganguo.chat.server.dto.LoginDTO;
+import io.ganguo.chat.server.dto.MessageAckDTO;
 import io.ganguo.chat.server.dto.UserDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -95,6 +96,11 @@ public class UserHandler extends IMHandler {
             resp.writeEntity(new LoginDTO(login));
             connection.sendResponse(resp);
 
+            // 是否已经登录进来了，踢下线
+            IMConnection old = ConnectionManager.getInstance().get(login.getUin());
+            if (old != null && old != connection) {
+                kick(old, request);
+            }
             // 绑定用户UIN到connection中
             ConnectionManager.getInstance().bindUin(login.getUin(), connection);
         } else {
@@ -104,6 +110,22 @@ public class UserHandler extends IMHandler {
             connection.sendResponse(resp);
             connection.kill();
         }
+    }
+
+    /**
+     * 被踢下线
+     *
+     * @param connection
+     */
+    private void kick(IMConnection connection, IMRequest request) {
+        // send 离线信息，并kill
+        IMResponse resp = new IMResponse();
+        Header header = request.getHeader();
+        header.setHandlerId(getId());
+        header.setCommandId(Commands.LOGIN_CHANNEL_KICKED);
+        resp.setHeader(header);
+        connection.sendResponse(resp);
+        connection.kill();
     }
 
 }

@@ -17,6 +17,7 @@ public class Commands {
     public static final short LOGIN_CHANNEL_REQUEST = 0x0002;
     public static final short LOGIN_CHANNEL_SUCCESS = 0x2002;
     public static final short LOGIN_CHANNEL_FAIL = 0x2000;
+    public static final short LOGIN_CHANNEL_KICKED = 0x2001;
 
     /**
      * 消息

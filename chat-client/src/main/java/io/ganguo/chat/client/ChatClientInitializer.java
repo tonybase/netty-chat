@@ -1,5 +1,6 @@
 package io.ganguo.chat.client;
 
+import io.ganguo.chat.client.handler.MessageHandler;
 import io.ganguo.chat.client.handler.UserHandler;
 import io.ganguo.chat.core.codec.PacketDecoder;
 import io.ganguo.chat.core.codec.PacketEncoder;
@@ -27,14 +28,7 @@ public class ChatClientInitializer extends ChannelInitializer<SocketChannel> {
     }
 
     private void initIMHandler() {
-        ApplicationContext context = Bootstrap.getContext();
-
-        // register all handlers
-        Map<String, IMHandler> handlers = context.getBeansOfType(IMHandler.class);
-        for (String key : handlers.keySet()) {
-            IMHandler handler = handlers.get(key);
-            IMHandlerManager.getInstance().register(handler);
-        }
         IMHandlerManager.getInstance().register(UserHandler.class);
+        IMHandlerManager.getInstance().register(MessageHandler.class);
     }
 }

@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 /**
  * Created by Tony on 2/20/15.
  */
-@Component
 public class MessageHandler extends IMHandler {
 
     @Override

@@ -19,7 +19,6 @@ import org.springframework.stereotype.Component;
  * @author Tony
  * @createAt Feb 17, 2015
  */
-@Component
 public class ChatClient {
 
     private final String host;
@@ -47,8 +46,9 @@ public class ChatClient {
             Channel channel = future.sync().channel();
             login(channel);
 
+            future.channel().closeFuture().awaitUninterruptibly();
         } finally {
-//            group.shutdownGracefully();
+            group.shutdownGracefully();
         }
     }
 
@@ -68,4 +68,7 @@ public class ChatClient {
         channel.writeAndFlush(resp);
     }
 
+    public static void main(String[] args) throws Exception {
+        new ChatClient().run();
+    }
 }

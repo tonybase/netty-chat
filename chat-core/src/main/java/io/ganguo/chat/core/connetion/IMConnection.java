@@ -11,7 +11,7 @@ import io.netty.channel.ChannelHandlerContext;
  * @createAt Feb 17, 2015
  */
 public class IMConnection {
-    private Long mUin;
+    private long mUin;
     private ChannelHandlerContext mContext;
     private volatile boolean isKilled = false;
 
@@ -20,11 +20,11 @@ public class IMConnection {
         mContext = ctx;
     }
 
-    public void setUin(Long uin) {
+    public void setUin(long uin) {
         mUin = uin;
     }
 
-    public Long getUin() {
+    public long getUin() {
         return mUin;
     }
 
@@ -40,10 +40,15 @@ public class IMConnection {
         return isKilled;
     }
 
+    public ChannelHandlerContext getContext() {
+        return mContext;
+    }
+
     public void kill() {
         if (!isKilled) {
             isKilled = true;
             mContext.channel().close();
+            ConnectionManager.getInstance().remove(mUin);
         }
     }
 

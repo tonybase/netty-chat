@@ -21,7 +21,6 @@ import java.util.Scanner;
  * @author Tony
  * @createAt Feb 17, 2015
  */
-@Component
 public class UserHandler extends IMHandler {
 
     private Logger logger = LoggerFactory.getLogger(UserHandler.class);
@@ -51,6 +50,9 @@ public class UserHandler extends IMHandler {
                 onLoginChannelFail(connection, request);
                 break;
 
+            case Commands.LOGIN_CHANNEL_KICKED:
+                onKicked(connection, request);
+                break;
             default:
                 break;
         }
@@ -108,6 +110,12 @@ public class UserHandler extends IMHandler {
      */
     private void onLoginFail(IMConnection connection, IMRequest request) {
         logger.info("onLoginFail");
+
+        connection.kill();
+    }
+
+    private void onKicked(IMConnection connection, IMRequest request) {
+        logger.info("onKicked");
 
         connection.kill();
     }

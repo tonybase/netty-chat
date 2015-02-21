@@ -29,7 +29,6 @@ public class ChatClientHandler extends SimpleChannelInboundHandler<IMRequest> {
     @Override
     public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
         logger.info("handlerRemoved");
-
         mConnection = null;
     }
 
