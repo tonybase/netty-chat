@@ -10,10 +10,8 @@ import io.ganguo.chat.core.transport.IMRequest;
 
 import io.ganguo.chat.core.transport.IMResponse;
 import io.ganguo.chat.server.dto.MessageDTO;
-import io.ganguo.chat.server.dto.UserDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
@@ -65,7 +63,7 @@ public class UserHandler extends IMHandler {
     private void onLoginChannelFail(IMConnection connection, IMRequest request) {
         logger.info("onLoginChannelFail");
 
-        connection.kill();
+        connection.close();
     }
 
     /**
@@ -111,13 +109,13 @@ public class UserHandler extends IMHandler {
     private void onLoginFail(IMConnection connection, IMRequest request) {
         logger.info("onLoginFail");
 
-        connection.kill();
+        connection.close();
     }
 
     private void onKicked(IMConnection connection, IMRequest request) {
         logger.info("onKicked");
 
-        connection.kill();
+        connection.close();
     }
 
 }

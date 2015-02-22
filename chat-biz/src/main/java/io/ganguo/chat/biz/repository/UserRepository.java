@@ -1,6 +1,7 @@
 package io.ganguo.chat.biz.repository;
 
 import io.ganguo.chat.biz.entity.User;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,5 +15,6 @@ public interface UserRepository extends CrudRepository<User, BigInteger> {
 
     User findByAccount(String account);
 
-    User findByUin(Long uin);
+    User findByUin(long uin);
+
 }

@@ -1,6 +1,6 @@
 package io.ganguo.chat.biz.entity;
 
-import io.ganguo.chat.biz.bean.ClientType;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 

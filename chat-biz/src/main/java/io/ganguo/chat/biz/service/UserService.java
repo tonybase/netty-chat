@@ -7,6 +7,11 @@ import io.ganguo.chat.biz.entity.User;
  * Created by Tony on 2/20/15.
  */
 public interface UserService {
+
     public Login login(String account, String password);
-    User findByUin(Long uin);
+
+    public boolean authenticate(Long uin, String token);
+        
+    User findByUin(long uin);
+
 }

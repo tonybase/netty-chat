@@ -15,7 +15,7 @@
 
 ##### 客户端请求，通过readEntity读取对象数据，以游标方式读取，可以连续读取多个Entity
 **IMRequest:**<br>
-> readEntity(Entity.class);<br>
+> readEntity(IMSerializer.class);<br>
   
 ##### 服务端应答，通过writeEntity写入对象数据，可以连续写入多个Entity
 **IMResponse:**<br>

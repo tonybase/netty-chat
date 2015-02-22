@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByUin(Long uin) {
+    public User findByUin(long uin) {
         return userRepository.findByUin(uin);
     }
 
@@ -54,6 +54,7 @@ public class UserServiceImpl implements UserService {
      * @param token
      * @return
      */
+    @Override
     public boolean authenticate(Long uin, String token) {
         Login login = loginRepository.findByUin(uin);
         if (login != null && token != null) {

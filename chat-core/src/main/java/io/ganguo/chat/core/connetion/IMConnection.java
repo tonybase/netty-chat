@@ -1,7 +1,6 @@
 package io.ganguo.chat.core.connetion;
 
 import io.ganguo.chat.core.transport.IMResponse;
-import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 
 /**
@@ -11,49 +10,77 @@ import io.netty.channel.ChannelHandlerContext;
  * @createAt Feb 17, 2015
  */
 public class IMConnection {
-    private long mUin;
+    private long mId;
+    private volatile boolean isClosed = false;
     private ChannelHandlerContext mContext;
-    private volatile boolean isKilled = false;
+    private ConnectionCloseListener closeListener;
 
-    public IMConnection(Long uin, ChannelHandlerContext ctx) {
-        mUin = uin;
+    public IMConnection(Long id, ChannelHandlerContext ctx) {
+        mId = id;
         mContext = ctx;
     }
 
-    public void setUin(long uin) {
-        mUin = uin;
+    public long getId() {
+        return mId;
     }
 
-    public long getUin() {
-        return mUin;
+    public boolean validate() {
+        if (isClosed()) {
+            return false;
+        }
+        // 发送一个心跳包，同步等待success
+        return true;
     }
 
-    public Channel getChannel() {
-        return mContext.channel();
+    public boolean isActive() {
+        return mContext != null && mContext.channel().isActive();
     }
 
-    public boolean isAvailable() {
-        return mContext.channel().isActive();
+    public boolean isClosed() {
+        return isClosed || !isActive();
     }
 
-    public boolean isKilled() {
-        return isKilled;
-    }
-
-    public ChannelHandlerContext getContext() {
-        return mContext;
-    }
-
-    public void kill() {
-        if (!isKilled) {
-            isKilled = true;
+    public void close() {
+        if (!isClosed) {
             mContext.channel().close();
-            ConnectionManager.getInstance().remove(mUin);
+            notifyRemoved();
         }
     }
 
     public void sendResponse(IMResponse resp) {
-        mContext.writeAndFlush(resp);
+        if (isActive()) {
+            mContext.writeAndFlush(resp);
+        }
+    }
+
+    public void notifyRemoved() {
+        if (closeListener != null) {
+            closeListener.onClosed(this);
+        }
+        isClosed = true;
+        mContext = null;
+        closeListener = null;
+    }
+
+    public void registerCloseListener(ConnectionCloseListener listener) {
+        if (closeListener != null) {
+            throw new IllegalStateException("Close listener already configured");
+        }
+        if (isClosed()) {
+            listener.onClosed(this);
+        } else {
+            closeListener = listener;
+        }
+    }
+
+    public void removeCloseListener(ConnectionCloseListener listener) {
+        if (closeListener == listener) {
+            closeListener = null;
+        }
+    }
+
+    public interface ConnectionCloseListener {
+        public void onClosed(IMConnection connection);
     }
 
 }

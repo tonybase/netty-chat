@@ -1,16 +1,13 @@
 package io.ganguo.chat.client.handler;
 
 import io.ganguo.chat.biz.entity.Message;
-import io.ganguo.chat.core.connetion.ConnectionManager;
 import io.ganguo.chat.core.connetion.IMConnection;
 import io.ganguo.chat.core.handler.IMHandler;
 import io.ganguo.chat.core.protocol.Commands;
 import io.ganguo.chat.core.protocol.Handlers;
 import io.ganguo.chat.core.transport.Header;
 import io.ganguo.chat.core.transport.IMRequest;
-import io.ganguo.chat.core.transport.IMResponse;
 import io.ganguo.chat.server.dto.MessageDTO;
-import org.springframework.stereotype.Component;
 
 /**
  * Created by Tony on 2/20/15.
@@ -33,7 +30,7 @@ public class MessageHandler extends IMHandler {
                 System.out.println("用户不存在接收不到消息～～");
                 break;
             default:
-                connection.kill();
+                connection.close();
                 break;
         }
     }

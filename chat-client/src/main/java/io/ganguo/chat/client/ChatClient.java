@@ -13,7 +13,6 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import org.springframework.stereotype.Component;
 
 /**
  * @author Tony
@@ -46,17 +45,17 @@ public class ChatClient {
             Channel channel = future.sync().channel();
             login(channel);
 
-            future.channel().closeFuture().awaitUninterruptibly();
+//            future.channel().closeFuture().awaitUninterruptibly();
         } finally {
-            group.shutdownGracefully();
+//            group.shutdownGracefully();
         }
     }
 
     public void login(Channel channel) {
         User user = new User();
-        user.setClientType(ClientType.MAC.getValue());
-        user.setAccount("test1");
-        user.setPassword("test1");
+        user.setClientType(ClientType.MAC.value());
+        user.setAccount("test");
+        user.setPassword("test");
 
         IMResponse resp = new IMResponse();
         Header header = new Header();
@@ -65,10 +64,14 @@ public class ChatClient {
         resp.setHeader(header);
         resp.writeEntity(new UserDTO(user));
 
-        channel.writeAndFlush(resp);
+        channel.writeAndFlush(resp).awaitUninterruptibly();
     }
 
     public static void main(String[] args) throws Exception {
-        new ChatClient().run();
+        for (int i = 0; i < 100; i++) {
+            new ChatClient().run();
+            
+            Thread.sleep(10);
+        }
     }
 }

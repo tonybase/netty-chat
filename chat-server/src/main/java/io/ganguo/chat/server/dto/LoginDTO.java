@@ -31,7 +31,6 @@ public class LoginDTO implements IMSerializer {
     @Override
     public DataBuffer encode(short version) {
         DataBuffer buffer = new DataBuffer();
-        buffer.writeString(login.getId());
         buffer.writeLong(login.getUin());
         buffer.writeString(login.getAuthToken());
         buffer.writeLong(login.getActiveTime());
@@ -43,7 +42,6 @@ public class LoginDTO implements IMSerializer {
         if(login == null) {
             login = new Login();
         }
-        login.setId(buffer.readString());
         login.setUin(buffer.readLong());
         login.setAuthToken(buffer.readString());
         login.setActiveTime(buffer.readLong());

@@ -20,7 +20,7 @@ public class ChatClientHandler extends SimpleChannelInboundHandler<IMRequest> {
         logger.info("handlerAdded");
 
         if (mConnection != null) {
-            mConnection.kill();
+            mConnection.close();
             mConnection = null;
         }
         mConnection = new IMConnection(0L, ctx);

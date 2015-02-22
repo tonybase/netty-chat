@@ -9,7 +9,7 @@ public enum ClientType {
 
     private byte mValue = 0;
 
-    public byte getValue() {
+    public byte value() {
         return mValue;
     }
 
@@ -19,7 +19,7 @@ public enum ClientType {
 
     public static ClientType valueOfRaw(byte value) {
         for (ClientType clientType : ClientType.values()) {
-            if (clientType.getValue() == value) {
+            if (clientType.value() == value) {
                 return clientType;
             }
         }

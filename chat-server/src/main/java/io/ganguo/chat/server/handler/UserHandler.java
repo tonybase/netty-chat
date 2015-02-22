@@ -1,26 +1,23 @@
 package io.ganguo.chat.server.handler;
 
-import io.ganguo.chat.biz.bean.ClientType;
 import io.ganguo.chat.biz.entity.Login;
 import io.ganguo.chat.biz.entity.User;
 import io.ganguo.chat.biz.service.impl.UserServiceImpl;
-import io.ganguo.chat.core.connetion.ConnectionManager;
 import io.ganguo.chat.core.connetion.IMConnection;
 import io.ganguo.chat.core.handler.IMHandler;
 import io.ganguo.chat.core.protocol.Commands;
 import io.ganguo.chat.core.protocol.Handlers;
-import io.ganguo.chat.core.transport.DataBuffer;
 import io.ganguo.chat.core.transport.Header;
 import io.ganguo.chat.core.transport.IMRequest;
 import io.ganguo.chat.core.transport.IMResponse;
 import io.ganguo.chat.server.dto.LoginDTO;
-import io.ganguo.chat.server.dto.MessageAckDTO;
 import io.ganguo.chat.server.dto.UserDTO;
+import io.ganguo.chat.server.session.ClientSession;
+import io.ganguo.chat.server.session.ClientSessionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import sun.rmi.runtime.Log;
 
 /**
  * @author Tony
@@ -49,7 +46,7 @@ public class UserHandler extends IMHandler {
                 loginChannel(connection, request);
                 break;
             default:
-                connection.kill();
+                connection.close();
                 break;
         }
     }
@@ -70,14 +67,19 @@ public class UserHandler extends IMHandler {
             resp.writeEntity(new UserDTO(user));
             connection.sendResponse(resp);
 
+            // 是否已经登录进来了，踢下线
+            ClientSession old = ClientSessionManager.getInstance().get(login.getUin());
+            if (old != null && old.getConnection() != connection) {
+                kick(old.getConnection(), request);
+            }
             // 绑定用户UIN到connection中
-            ConnectionManager.getInstance().bindUin(user.getUin(), connection);
+            ClientSessionManager.getInstance().add(new ClientSession(login, connection));
         } else {
             header.setHandlerId(getId());
             header.setCommandId(Commands.LOGIN_CHANNEL_FAIL);
             resp.setHeader(header);
             connection.sendResponse(resp);
-            connection.kill();
+            connection.close();
         }
     }
 
@@ -97,18 +99,18 @@ public class UserHandler extends IMHandler {
             connection.sendResponse(resp);
 
             // 是否已经登录进来了，踢下线
-            IMConnection old = ConnectionManager.getInstance().get(login.getUin());
-            if (old != null && old != connection) {
-                kick(old, request);
+            ClientSession old = ClientSessionManager.getInstance().get(login.getUin());
+            if (old != null && old.getConnection() != connection) {
+                kick(old.getConnection(), request);
             }
             // 绑定用户UIN到connection中
-            ConnectionManager.getInstance().bindUin(login.getUin(), connection);
+            ClientSessionManager.getInstance().add(new ClientSession(login, connection));
         } else {
             header.setHandlerId(getId());
             header.setCommandId(Commands.LOGIN_FAIL);
             resp.setHeader(header);
             connection.sendResponse(resp);
-            connection.kill();
+            connection.close();
         }
     }
 
@@ -125,7 +127,7 @@ public class UserHandler extends IMHandler {
         header.setCommandId(Commands.LOGIN_CHANNEL_KICKED);
         resp.setHeader(header);
         connection.sendResponse(resp);
-        connection.kill();
+        connection.close();
     }
 
 }

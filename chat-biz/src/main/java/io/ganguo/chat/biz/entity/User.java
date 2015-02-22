@@ -15,7 +15,6 @@ public class User extends BaseEntity {
     private String avatarUrl;
     private String nickName;
     private byte gender;
-    private byte presence;
     private byte clientType;
 
     private BigInteger userDetailId;
@@ -68,14 +67,6 @@ public class User extends BaseEntity {
         this.gender = gender;
     }
 
-    public byte getPresence() {
-        return presence;
-    }
-
-    public void setPresence(byte presence) {
-        this.presence = presence;
-    }
-
     public byte getClientType() {
         return clientType;
     }
@@ -101,7 +92,6 @@ public class User extends BaseEntity {
                 ", avatarUrl='" + avatarUrl + '\'' +
                 ", nickName='" + nickName + '\'' +
                 ", gender=" + gender +
-                ", presence=" + presence +
                 ", userDetailId=" + userDetailId +
                 '}';
     }

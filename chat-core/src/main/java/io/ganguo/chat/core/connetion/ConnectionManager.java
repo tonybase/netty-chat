@@ -1,12 +1,10 @@
 package io.ganguo.chat.core.connetion;
 
-import io.ganguo.chat.core.util.TaskUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.AttributeKey;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -17,11 +15,11 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class ConnectionManager {
 
-    private static final AttributeKey<IMConnection> CONN_KEY = AttributeKey.valueOf("connection");
+    private static final AttributeKey<Long> KEY_CONN_ID = AttributeKey.valueOf("connection_id");
     private static ConnectionManager mInstance = null;
 
-    private AtomicLong mUniqueGenerator = null;
-    private Map<Long, IMConnection> mConnections = null;
+    private final AtomicLong mUniqueGenerator;
+    private final Map<Long, IMConnection> mConnections;
 
     private ConnectionManager() {
         mUniqueGenerator = new AtomicLong(0);
@@ -36,36 +34,24 @@ public class ConnectionManager {
     }
 
     public IMConnection create(ChannelHandlerContext ctx) {
-        // 取负，如果用户登录建立连接，将会使用uin替换，为正数
-        return create(mUniqueGenerator.decrementAndGet(), ctx);
-    }
-
-    public IMConnection create(long uin, ChannelHandlerContext ctx) {
-        final IMConnection conn = new IMConnection(uin, ctx);
-        ctx.attr(CONN_KEY).set(conn);
-        add(conn);
+        long id = mUniqueGenerator.incrementAndGet();
+        IMConnection conn = new IMConnection(id, ctx);
+        mConnections.put(id, conn);
+        // put id to channel
+        ctx.attr(KEY_CONN_ID).set(id);
         return conn;
     }
 
-    public void bindUin(long uin, IMConnection conn) {
-        remove(conn);
-
-        conn.setUin(uin);
-        add(conn);
-    }
-
-    public void add(IMConnection c) {
-        mConnections.put(c.getUin(), c);
-    }
-
-    public void remove(long uin) {
-        mConnections.remove(uin);
+    public void remove(long id) {
+        IMConnection conn = mConnections.remove(id);
+        if (conn != null) {
+            conn.notifyRemoved();
+        }
     }
 
     public void remove(IMConnection conn) {
-        // kill 时自动remove，避免被踢下线时，延时监听进行remove当前uin
-        if (conn != null && !conn.isKilled()) {
-            remove(conn.getUin());
+        if (conn != null) {
+            remove(conn.getId());
         }
     }
 
@@ -73,21 +59,21 @@ public class ConnectionManager {
         remove(find(ctx));
     }
 
-    /**
-     * mark
-     * 不要使用Map里面的size()，会每次获取都需要计算
-     *
-     * @return
-     */
-    public int count() {
-        return mConnections.size();
-    }
-
     public IMConnection get(long id) {
         return mConnections.get(id);
     }
 
     public IMConnection find(ChannelHandlerContext ctx) {
-        return ctx.attr(CONN_KEY).get();
+        return get(ctx.attr(KEY_CONN_ID).get());
+    }
+
+    /**
+     * mark
+     * 不要使用Map里面的size()，每次获取都需要计算
+     *
+     * @return
+     */
+    public int count() {
+        return mConnections.size();
     }
 }

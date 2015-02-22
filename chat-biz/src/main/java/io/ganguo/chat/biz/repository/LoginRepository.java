@@ -8,8 +8,8 @@ import java.math.BigInteger;
 /**
  * Created by Tony on 2/20/15.
  */
-public interface LoginRepository extends CrudRepository<Login, BigInteger> {
+public interface LoginRepository extends CrudRepository<Login, Long> {
 
-    Login findByUin(Long uin);
+    Login findByUin(long uin);
 
 }

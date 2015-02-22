@@ -10,7 +10,7 @@ public enum Gender {
 
     private byte mValue = 0;
 
-    public byte getValue() {
+    public byte value() {
         return mValue;
     }
 
@@ -20,7 +20,7 @@ public enum Gender {
 
     public static Gender valueOfRaw(byte value) {
         for (Gender gender : Gender.values()) {
-            if (gender.getValue() == value) {
+            if (gender.value() == value) {
                 return gender;
             }
         }

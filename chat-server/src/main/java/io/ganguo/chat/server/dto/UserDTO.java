@@ -1,7 +1,5 @@
 package io.ganguo.chat.server.dto;
 
-import io.ganguo.chat.biz.bean.Gender;
-import io.ganguo.chat.biz.bean.Presence;
 import io.ganguo.chat.biz.entity.User;
 import io.ganguo.chat.core.transport.DataBuffer;
 import io.ganguo.chat.core.transport.IMSerializer;
@@ -39,7 +37,6 @@ public class UserDTO implements IMSerializer {
         data.writeString(user.getNickName());
         data.writeString(user.getAvatarUrl());
         data.writeByte(user.getGender());
-        data.writeByte(user.getPresence());
         return data;
     }
 
@@ -55,6 +52,5 @@ public class UserDTO implements IMSerializer {
         user.setNickName(buffer.readString());
         user.setAvatarUrl(buffer.readString());
         user.setGender(buffer.readByte());
-        user.setPresence(buffer.readByte());
     }
 }

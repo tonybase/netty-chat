@@ -1,7 +1,6 @@
 package io.ganguo.chat.server.handler;
 
 import io.ganguo.chat.biz.entity.Message;
-import io.ganguo.chat.core.connetion.ConnectionManager;
 import io.ganguo.chat.core.connetion.IMConnection;
 import io.ganguo.chat.core.handler.IMHandler;
 import io.ganguo.chat.core.protocol.Commands;
@@ -10,6 +9,8 @@ import io.ganguo.chat.core.transport.Header;
 import io.ganguo.chat.core.transport.IMRequest;
 import io.ganguo.chat.core.transport.IMResponse;
 import io.ganguo.chat.server.dto.MessageDTO;
+import io.ganguo.chat.server.session.ClientSession;
+import io.ganguo.chat.server.session.ClientSessionManager;
 import org.springframework.stereotype.Component;
 
 /**
@@ -31,7 +32,7 @@ public class MessageHandler extends IMHandler {
                 sendUserMessage(connection, request);
                 break;
             default:
-                connection.kill();
+                connection.close();
                 break;
         }
     }
@@ -41,14 +42,14 @@ public class MessageHandler extends IMHandler {
         Message message = messageDTO.getMessage();
         message.setCreateAt(System.currentTimeMillis());
 
-        IMConnection toConn = ConnectionManager.getInstance().get(messageDTO.getTo());
+        ClientSession session = ClientSessionManager.getInstance().get(messageDTO.getTo());
         IMResponse resp = new IMResponse();
         Header header = request.getHeader();
-        if (toConn != null) {
-            message.setFrom(toConn.getUin());
+        if (session != null) {
+            message.setFrom(session.getUin());
             resp.setHeader(request.getHeader());
             resp.writeEntity(messageDTO);
-            toConn.sendResponse(resp);
+            session.getConnection().sendResponse(resp);
         } else {
             header.setCommandId(Commands.ERROR_USER_NOT_EXISTS);
             resp.setHeader(request.getHeader());
