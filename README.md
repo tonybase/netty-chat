@@ -31,12 +31,12 @@
 > dispatch(IMConnection, IMRequest)<br>
 
 #### 业务处理流程<br>
-> Received：
-> findHandler(id).dispatch() -> UserHandler
+> Received：<br>
+> findHandler(id).dispatch() -> UserHandler<br>
 >
-> UserHandler.dispatch()
->    switch(cmdId)
->    // doCommand
+> UserHandler.dispatch()<br>
+>    switch(cmdId)<br>
+>    // doCommand<br>
 >
 > UserHandler <- UserService <- UserRepository<br>
   
