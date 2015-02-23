@@ -47,5 +47,5 @@
 * 如果发送消息时from != to服务器，通过chat-route做send操作，自动转发到相应服务器，再做业务处理，然后应答相应客户端。
 
 #### 序列图
-![image](https://raw.githubusercontent.com/im-qq/netty-chat/master/docs/uml/Login.png)
-![image](https://raw.githubusercontent.com/im-qq/netty-chat/master/docs/uml/Message.png)
+![image](https://raw.githubusercontent.com/im-qq/netty-chat/master/docs/uml/Login.jpg)
+![image](https://raw.githubusercontent.com/im-qq/netty-chat/master/docs/uml/Message.jpg)
