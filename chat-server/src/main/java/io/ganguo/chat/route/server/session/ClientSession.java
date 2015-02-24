@@ -16,7 +16,9 @@ public class ClientSession {
     public ClientSession(Login login, IMConnection connection) {
         mLogin = login;
         mConnection = connection;
-
+        mPresence = new Presence();
+        mPresence.setUin(login.getUin());
+        mPresence.setMode(Presence.Mode.AVAILABLE.value());
         // bind Uin
         connection.setUin(login.getUin());
     }
@@ -34,7 +36,7 @@ public class ClientSession {
     }
 
     public Presence getPresence() {
-        return mPresence == null ? new Presence() : mPresence;
+        return mPresence;
     }
 
     public void setPresence(Presence presence) {

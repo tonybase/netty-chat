@@ -26,10 +26,8 @@ public class ChatServerInitializer extends ChannelInitializer<SocketChannel> {
     }
 
     private void initIMHandler() {
-        ApplicationContext context = Bootstrap.getContext();
-
         // register all handlers
-        Map<String, IMHandler> handlers = context.getBeansOfType(IMHandler.class);
+        Map<String, IMHandler> handlers = ChatContext.getBeansOfType(IMHandler.class);
         for (String key : handlers.keySet()) {
             IMHandler handler = handlers.get(key);
             IMHandlerManager.getInstance().register(handler);

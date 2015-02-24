@@ -19,7 +19,7 @@ import java.util.List;
  */
 @Configuration
 @EnableCaching
-public class EhCacheConfiguration extends CachingConfigurerSupport {
+public class CachingConfiguration extends CachingConfigurerSupport {
 
     @Bean
     @Override

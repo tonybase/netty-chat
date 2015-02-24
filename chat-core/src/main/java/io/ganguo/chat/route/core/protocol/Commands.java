@@ -11,6 +11,7 @@ public class Commands {
     public static final short LOGIN_REQUEST = 0x0001;
     public static final short LOGIN_SUCCESS = 0x1001;
     public static final short LOGIN_FAIL = 0x1000;
+
     /**
      * 登录 Channel
      */
@@ -22,6 +23,7 @@ public class Commands {
     /**
      * 消息
      */
+    public static final short USER_PRESENCE_CHANGED = 0x0100;
     public static final short USER_MESSAGE_REQUEST = 0x0001;
     public static final short USER_MESSAGE_SUCCESS = 0x1001;
     public static final short USER_MESSAGE_FAIL = 0x1000;

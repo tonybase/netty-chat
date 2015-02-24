@@ -73,7 +73,8 @@ public class UserHandler extends IMHandler {
                 kick(old.getConnection(), request);
             }
             // 绑定用户UIN到connection中
-            ClientSessionManager.getInstance().add(new ClientSession(login, connection));
+            ClientSession session = new ClientSession(login, connection);
+            ClientSessionManager.getInstance().add(session);
         } else {
             header.setHandlerId(getId());
             header.setCommandId(Commands.LOGIN_CHANNEL_FAIL);

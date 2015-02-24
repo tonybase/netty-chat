@@ -11,9 +11,13 @@ import java.util.concurrent.Executors;
 public class TaskUtil {
 
     private static ExecutorService singleExecutor = Executors.newSingleThreadExecutor();
+    private static ExecutorService poolExecutor = Executors.newCachedThreadPool();
 
     public static void single(Runnable runnable) {
         singleExecutor.submit(runnable);
     }
 
+    public static void pool(Runnable runnable) {
+        poolExecutor.submit(runnable);
+    }
 }

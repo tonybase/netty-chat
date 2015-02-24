@@ -1,5 +1,6 @@
 package io.ganguo.chat.route.client.handler;
 
+import io.ganguo.chat.route.biz.bean.Presence;
 import io.ganguo.chat.route.biz.entity.Message;
 import io.ganguo.chat.route.core.connetion.IMConnection;
 import io.ganguo.chat.route.core.handler.IMHandler;
@@ -10,6 +11,7 @@ import io.ganguo.chat.route.core.transport.IMRequest;
 
 import io.ganguo.chat.route.core.transport.IMResponse;
 import io.ganguo.chat.route.server.dto.MessageDTO;
+import io.ganguo.chat.route.server.dto.PresenceDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,9 +53,19 @@ public class UserHandler extends IMHandler {
             case Commands.LOGIN_CHANNEL_KICKED:
                 onKicked(connection, request);
                 break;
+
+            case Commands.USER_PRESENCE_CHANGED:
+                onPresenceChanged(connection, request);
+                break;
             default:
                 break;
         }
+    }
+
+    private void onPresenceChanged(IMConnection connection, IMRequest request) {
+        PresenceDTO presenceDTO = request.readEntity(PresenceDTO.class);
+        Presence presence = presenceDTO.getPresence();
+        logger.info("onPresenceChanged uin=" + presence.getUin() + " " + Presence.Mode.valueOfRaw(presence.getMode()));
     }
 
     private void onLoginChannelSuccess(IMConnection connection, IMRequest request) {

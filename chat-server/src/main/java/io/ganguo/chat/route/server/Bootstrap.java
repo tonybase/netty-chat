@@ -16,17 +16,9 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan("io.ganguo.chat")
 public class Bootstrap {
     private static Logger logger = LoggerFactory.getLogger(Bootstrap.class);
-    private static ApplicationContext CONTEXT;
-
-    public static ApplicationContext getContext() {
-        if (CONTEXT == null) {
-            CONTEXT = new AnnotationConfigApplicationContext(Bootstrap.class);
-        }
-        return CONTEXT;
-    }
 
     public static void main(String[] args) {
-        ChatServer chatServer = getContext().getBean(ChatServer.class);
+        ChatServer chatServer = ChatContext.getBean(ChatServer.class);
         try {
             chatServer.run();
         } catch (Exception e) {

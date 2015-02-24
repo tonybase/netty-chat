@@ -45,4 +45,8 @@ public class ClientSessionManager {
         return mSessions.get(uin);
     }
 
+    public Map<Long, ClientSession> sessions() {
+        return mSessions;
+    }
+
 }

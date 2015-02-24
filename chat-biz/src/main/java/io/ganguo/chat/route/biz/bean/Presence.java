@@ -5,8 +5,8 @@ package io.ganguo.chat.route.biz.bean;
  */
 public class Presence {
     private long uin;
-    private long activeTime = System.currentTimeMillis();
     private byte mode = Mode.AVAILABLE.value();
+    private long activeTime = System.currentTimeMillis();
     private String status;
 
     public long getUin() {
