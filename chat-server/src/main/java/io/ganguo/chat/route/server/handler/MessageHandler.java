@@ -1,24 +1,24 @@
 package io.ganguo.chat.route.server.handler;
 
+import io.ganguo.chat.core.connetion.IMConnection;
+import io.ganguo.chat.core.handler.IMHandler;
+import io.ganguo.chat.core.protocol.Commands;
+import io.ganguo.chat.core.protocol.Handlers;
+import io.ganguo.chat.core.transport.Header;
+import io.ganguo.chat.core.transport.IMRequest;
+import io.ganguo.chat.core.transport.IMResponse;
 import io.ganguo.chat.route.biz.entity.Message;
-import io.ganguo.chat.route.core.connetion.IMConnection;
-import io.ganguo.chat.route.core.handler.IMHandler;
-import io.ganguo.chat.route.core.protocol.Commands;
-import io.ganguo.chat.route.core.protocol.Handlers;
-import io.ganguo.chat.route.core.transport.Header;
-import io.ganguo.chat.route.core.transport.IMRequest;
-import io.ganguo.chat.route.core.transport.IMResponse;
 import io.ganguo.chat.route.server.dto.AckDTO;
-import io.ganguo.chat.route.server.session.ClientSessionManager;
 import io.ganguo.chat.route.server.dto.MessageDTO;
 import io.ganguo.chat.route.server.session.ClientSession;
+import io.ganguo.chat.route.server.session.ClientSessionManager;
 import org.springframework.stereotype.Component;
 
 /**
  * Created by Tony on 2/20/15.
  */
 @Component
-public class MessageHandler extends IMHandler {
+public class MessageHandler extends IMHandler<IMRequest> {
 
     @Override
     public short getId() {

@@ -2,9 +2,9 @@ package io.ganguo.chat.route.client;
 
 import io.ganguo.chat.route.client.handler.MessageHandler;
 import io.ganguo.chat.route.client.handler.UserHandler;
-import io.ganguo.chat.route.core.codec.PacketDecoder;
-import io.ganguo.chat.route.core.codec.PacketEncoder;
-import io.ganguo.chat.route.core.handler.IMHandlerManager;
+import io.ganguo.chat.core.codec.PacketDecoder;
+import io.ganguo.chat.core.codec.PacketEncoder;
+import io.ganguo.chat.core.handler.IMHandlerManager;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;

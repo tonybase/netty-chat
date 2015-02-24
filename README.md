@@ -9,7 +9,7 @@
 **Header:**<br>
 
 > version   协议版本号，当协议有改变，以及entity属性有改变时通过版本号进行序列化操作。<br>
-> handlerId 业务分发处理，IMHandlerManager.find(handlerId)，通过handler去处理客户端请求命令。<br>
+> handlerId 业务分发处理，IMHandlerManager.find(handlerId)，通过handler去处理客户端请求。<br>
 > commandId 命令动作处理，IMHandler.dispatch(IMConnection, IMRequest)，对IMRequest处理，IMConnection应答或者kill。<br>
 > reserved  数据序列处理，对Actual Content进行加解密类型，以及序列化反序列化方式。<br>
 
@@ -49,3 +49,4 @@
 #### 序列图
 ![image](https://raw.githubusercontent.com/im-qq/netty-chat/master/docs/uml/Login.jpg)
 ![image](https://raw.githubusercontent.com/im-qq/netty-chat/master/docs/uml/Message.jpg)
+![image](https://raw.githubusercontent.com/im-qq/netty-chat/master/docs/uml/Distributed.png)

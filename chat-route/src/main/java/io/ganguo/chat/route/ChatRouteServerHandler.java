@@ -1,20 +1,18 @@
-package io.ganguo.chat.route.server;
+package io.ganguo.chat.route;
 
 import io.ganguo.chat.core.connetion.ConnectionManager;
 import io.ganguo.chat.core.connetion.IMConnection;
 import io.ganguo.chat.core.handler.IMHandler;
 import io.ganguo.chat.core.handler.IMHandlerManager;
-import io.ganguo.chat.core.transport.Header;
-import io.ganguo.chat.core.transport.IMRequest;
+import io.ganguo.chat.route.bean.RouteData;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ChatServerHandler extends SimpleChannelInboundHandler<IMRequest> {
+public class ChatRouteServerHandler extends SimpleChannelInboundHandler<RouteData> {
 
-    private Logger logger = LoggerFactory.getLogger(ChatServerHandler.class);
+    private Logger logger = LoggerFactory.getLogger(ChatRouteServerHandler.class);
 
     private final ConnectionManager mConnectionManager = ConnectionManager.getInstance();
 
@@ -37,17 +35,15 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<IMRequest> {
     }
 
     @Override
-    protected void messageReceived(ChannelHandlerContext ctx, IMRequest request) throws Exception {
-        logger.info("messageReceived header:" + request.getHeader());
+    protected void messageReceived(ChannelHandlerContext ctx, RouteData routeData) throws Exception {
+        logger.info("messageReceived header:" + routeData.getType());
 
         IMConnection conn = mConnectionManager.find(ctx);
-        Header header = request.getHeader();
-
-        IMHandler handler = IMHandlerManager.getInstance().find(header.getHandlerId());
+        IMHandler<RouteData> handler = IMHandlerManager.getInstance().find(routeData.getType());
         if (handler != null) {
-            handler.dispatch(conn, request);
+            handler.dispatch(conn, routeData);
         } else {
-            logger.warn("Not found handlerId: " + header.getHandlerId());
+            logger.warn("Not found handlerId: " + routeData.getType());
         }
     }
 }

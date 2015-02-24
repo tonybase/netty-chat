@@ -1,7 +1,7 @@
 package io.ganguo.chat.route.server.dto;
 
-import io.ganguo.chat.route.core.transport.DataBuffer;
-import io.ganguo.chat.route.core.transport.IMSerializer;
+import io.ganguo.chat.core.transport.DataBuffer;
+import io.ganguo.chat.core.transport.IMSerializer;
 
 /**
  * Created by Tony on 2/20/15.

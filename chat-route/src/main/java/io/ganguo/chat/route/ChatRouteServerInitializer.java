@@ -1,7 +1,7 @@
-package io.ganguo.chat.route.server;
+package io.ganguo.chat.route;
 
-import io.ganguo.chat.core.codec.PacketDecoder;
-import io.ganguo.chat.core.codec.PacketEncoder;
+import io.ganguo.chat.route.codec.RoutePacketDecoder;
+import io.ganguo.chat.route.codec.RoutePacketEncoder;
 import io.ganguo.chat.core.handler.IMHandler;
 import io.ganguo.chat.core.handler.IMHandlerManager;
 import io.netty.channel.ChannelInitializer;
@@ -10,17 +10,17 @@ import io.netty.channel.socket.SocketChannel;
 
 import java.util.Map;
 
-public class ChatServerInitializer extends ChannelInitializer<SocketChannel> {
+public class ChatRouteServerInitializer extends ChannelInitializer<SocketChannel> {
 
     @Override
     protected void initChannel(SocketChannel channel) throws Exception {
         ChannelPipeline pipeline = channel.pipeline();
 
-        pipeline.addLast("decoder", new PacketDecoder(8192, 0, 4));
-        pipeline.addLast("encoder", new PacketEncoder());
+        pipeline.addLast("decoder", new RoutePacketDecoder(8192, 0, 4));
+        pipeline.addLast("encoder", new RoutePacketEncoder());
 
-        pipeline.addLast("handler", new ChatServerHandler());
-
+        pipeline.addLast("handler", new ChatRouteServerHandler());
+       
         initIMHandler();
     }
 

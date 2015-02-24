@@ -3,13 +3,13 @@ package io.ganguo.chat.route.server.handler;
 import io.ganguo.chat.route.biz.entity.Login;
 import io.ganguo.chat.route.biz.entity.User;
 import io.ganguo.chat.route.biz.service.impl.UserServiceImpl;
-import io.ganguo.chat.route.core.connetion.IMConnection;
-import io.ganguo.chat.route.core.handler.IMHandler;
-import io.ganguo.chat.route.core.protocol.Commands;
-import io.ganguo.chat.route.core.protocol.Handlers;
-import io.ganguo.chat.route.core.transport.Header;
-import io.ganguo.chat.route.core.transport.IMRequest;
-import io.ganguo.chat.route.core.transport.IMResponse;
+import io.ganguo.chat.core.connetion.IMConnection;
+import io.ganguo.chat.core.handler.IMHandler;
+import io.ganguo.chat.core.protocol.Commands;
+import io.ganguo.chat.core.protocol.Handlers;
+import io.ganguo.chat.core.transport.Header;
+import io.ganguo.chat.core.transport.IMRequest;
+import io.ganguo.chat.core.transport.IMResponse;
 import io.ganguo.chat.route.server.dto.LoginDTO;
 import io.ganguo.chat.route.server.dto.UserDTO;
 import io.ganguo.chat.route.server.session.ClientSession;
@@ -24,7 +24,7 @@ import org.springframework.stereotype.Component;
  * @createAt Feb 17, 2015
  */
 @Component
-public class UserHandler extends IMHandler {
+public class UserHandler extends IMHandler<IMRequest> {
     private Logger logger = LoggerFactory.getLogger(UserHandler.class);
 
     @Autowired

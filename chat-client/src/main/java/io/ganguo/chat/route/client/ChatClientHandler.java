@@ -1,10 +1,10 @@
 package io.ganguo.chat.route.client;
 
-import io.ganguo.chat.route.core.connetion.IMConnection;
-import io.ganguo.chat.route.core.handler.IMHandler;
-import io.ganguo.chat.route.core.handler.IMHandlerManager;
-import io.ganguo.chat.route.core.transport.Header;
-import io.ganguo.chat.route.core.transport.IMRequest;
+import io.ganguo.chat.core.connetion.IMConnection;
+import io.ganguo.chat.core.handler.IMHandler;
+import io.ganguo.chat.core.handler.IMHandlerManager;
+import io.ganguo.chat.core.transport.Header;
+import io.ganguo.chat.core.transport.IMRequest;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import org.slf4j.Logger;

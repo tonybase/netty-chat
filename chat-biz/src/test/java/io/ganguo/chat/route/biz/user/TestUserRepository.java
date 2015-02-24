@@ -3,6 +3,7 @@ package io.ganguo.chat.route.biz.user;
 import io.ganguo.chat.route.biz.AbstractIntegrationTest;
 import io.ganguo.chat.route.biz.entity.User;
 import io.ganguo.chat.route.biz.repository.UserRepository;
+import io.ganguo.chat.core.util.Benchmark;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -18,13 +19,17 @@ public class TestUserRepository extends AbstractIntegrationTest {
 
     @Test
     public void testSave() {
-        User user = new User();
-        user.setUin(2L);
-        user.setAccount("test2");
-        user.setPassword("test2");
-        user = userRepository.save(user);
+        Benchmark.start("testSave");
+        for (int i = 3; i < 100000; i++) {
+            User user = new User();
+            user.setUin(i);
+            user.setAccount("test" + i);
+            user.setPassword("test" + i);
+            user = userRepository.save(user);
 
-        System.out.println("##### " + user);
+            System.out.println("##### " + user);
+        }
+        Benchmark.end("testSave");
     }
 
     @Test

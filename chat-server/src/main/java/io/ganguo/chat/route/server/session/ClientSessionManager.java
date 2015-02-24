@@ -1,7 +1,7 @@
 package io.ganguo.chat.route.server.session;
 
 import io.ganguo.chat.route.biz.bean.Presence;
-import io.ganguo.chat.route.core.connetion.IMConnection;
+import io.ganguo.chat.core.connetion.IMConnection;
 import io.ganguo.chat.route.server.event.EventDispatcherManager;
 
 import java.util.Map;

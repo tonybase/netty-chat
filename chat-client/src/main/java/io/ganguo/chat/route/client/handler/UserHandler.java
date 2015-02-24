@@ -2,14 +2,14 @@ package io.ganguo.chat.route.client.handler;
 
 import io.ganguo.chat.route.biz.bean.Presence;
 import io.ganguo.chat.route.biz.entity.Message;
-import io.ganguo.chat.route.core.connetion.IMConnection;
-import io.ganguo.chat.route.core.handler.IMHandler;
-import io.ganguo.chat.route.core.protocol.Commands;
-import io.ganguo.chat.route.core.protocol.Handlers;
-import io.ganguo.chat.route.core.transport.Header;
-import io.ganguo.chat.route.core.transport.IMRequest;
+import io.ganguo.chat.core.connetion.IMConnection;
+import io.ganguo.chat.core.handler.IMHandler;
+import io.ganguo.chat.core.protocol.Commands;
+import io.ganguo.chat.core.protocol.Handlers;
+import io.ganguo.chat.core.transport.Header;
+import io.ganguo.chat.core.transport.IMRequest;
 
-import io.ganguo.chat.route.core.transport.IMResponse;
+import io.ganguo.chat.core.transport.IMResponse;
 import io.ganguo.chat.route.server.dto.MessageDTO;
 import io.ganguo.chat.route.server.dto.PresenceDTO;
 import org.slf4j.Logger;
