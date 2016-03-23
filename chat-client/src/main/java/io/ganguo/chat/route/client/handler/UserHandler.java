@@ -21,7 +21,7 @@ import java.util.Scanner;
  * @author Tony
  * @createAt Feb 17, 2015
  */
-public class UserHandler extends IMHandler {
+public class UserHandler extends IMHandler<IMRequest> {
 
     private Logger logger = LoggerFactory.getLogger(UserHandler.class);
 
@@ -29,6 +29,7 @@ public class UserHandler extends IMHandler {
     public short getId() {
         return Handlers.USER;
     }
+
 
     @Override
     public void dispatch(IMConnection connection, IMRequest request) {

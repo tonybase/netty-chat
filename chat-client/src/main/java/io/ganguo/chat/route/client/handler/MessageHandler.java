@@ -14,7 +14,7 @@ import io.ganguo.chat.route.server.dto.MessageDTO;
 /**
  * Created by Tony on 2/20/15.
  */
-public class MessageHandler extends IMHandler {
+public class MessageHandler extends IMHandler<IMRequest> {
 
     @Override
     public short getId() {
