@@ -21,7 +21,7 @@ import java.util.Scanner;
  * @author Tony
  * @createAt Feb 17, 2015
  */
-public class UserHandler extends IMHandler {
+public class UserHandler extends IMHandler<IMRequest> {
 
     private Logger logger = LoggerFactory.getLogger(UserHandler.class);
 
