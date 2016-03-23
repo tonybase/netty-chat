@@ -30,6 +30,7 @@ public class UserHandler extends IMHandler<IMRequest> {
         return Handlers.USER;
     }
 
+
     @Override
     public void dispatch(IMConnection connection, IMRequest request) {
         Header header = request.getHeader();
