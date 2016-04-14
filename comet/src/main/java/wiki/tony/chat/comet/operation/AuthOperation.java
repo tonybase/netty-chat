@@ -1,6 +1,6 @@
 package wiki.tony.chat.comet.operation;
 
-import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.Channel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,14 +14,13 @@ import wiki.tony.chat.base.mq.MQMessageListener;
 import wiki.tony.chat.base.mq.impl.test.TestMQConsumer;
 import wiki.tony.chat.base.service.AuthService;
 import wiki.tony.chat.base.util.JsonUtils;
-import wiki.tony.chat.comet.bean.Constants;
 import wiki.tony.chat.comet.bean.Proto;
 
 /**
  * Created by Tony on 4/14/16.
  */
 @Component
-public class AuthOperation implements Operation {
+public class AuthOperation extends AbstractOperation {
 
     private final Logger logger = LoggerFactory.getLogger(AuthOperation.class);
 
@@ -40,7 +39,7 @@ public class AuthOperation implements Operation {
     }
 
     @Override
-    public void action(ChannelHandlerContext ctx, Proto proto) throws Exception {
+    public void action(Channel ch, Proto proto) throws Exception {
         AuthToken auth = JsonUtils.fromJson(proto.getBody(), AuthToken.class);
 
         // check token
@@ -48,27 +47,27 @@ public class AuthOperation implements Operation {
         String token = auth.getToken();
         if (authService.auth(serverId, userId, token)) {
             // put user id
-            ctx.attr(Constants.KEY_USER_ID).set(userId);
+            setUserId(ch, userId);
             // message consumer
-            addConsumerListener(ctx, userId);
+            addConsumerListener(ch, userId);
             logger.debug("auth ok");
         } else {
             logger.debug("auth fail");
         }
 
         proto.setOperation(OP_REPLY);
-        ctx.writeAndFlush(proto);
+        ch.writeAndFlush(proto);
 
     }
 
-    private void addConsumerListener(final ChannelHandlerContext ctx, final Long userId) {
+    private void addConsumerListener(final Channel ch, final Long userId) {
         mqConsumer.addListener(MQSubjectPrefix.MESSAGE, userId + "", new MQMessageListener() {
             @Override
             public void onMessage(MQMessage message) {
                 Proto proto = new Proto();
                 proto.setOperation(MessageOperation.OP);
                 proto.setBody(message.getData());
-                ctx.writeAndFlush(proto);
+                ch.writeAndFlush(proto);
 
                 logger.debug("consumer: {}", proto);
             }

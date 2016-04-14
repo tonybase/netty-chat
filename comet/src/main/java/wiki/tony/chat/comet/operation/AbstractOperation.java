@@ -1,6 +1,6 @@
 package wiki.tony.chat.comet.operation;
 
-import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.Channel;
 import wiki.tony.chat.comet.bean.Constants;
 import wiki.tony.chat.comet.exception.NotAuthException;
 
@@ -9,12 +9,16 @@ import wiki.tony.chat.comet.exception.NotAuthException;
  */
 public abstract class AbstractOperation implements Operation {
 
-    protected Long getUserId(ChannelHandlerContext ctx) {
-        return ctx.attr(Constants.KEY_USER_ID).get();
+    protected Long getUserId(Channel ch) {
+        return ch.attr(Constants.KEY_USER_ID).get();
     }
 
-    protected void checkAuth(ChannelHandlerContext ctx) throws NotAuthException {
-        if (getUserId(ctx) == null) {
+    protected void setUserId(Channel ch, Long userId) {
+        ch.attr(Constants.KEY_USER_ID).set(userId);
+    }
+
+    protected void checkAuth(Channel ch) throws NotAuthException {
+        if (getUserId(ch) == null) {
             throw new NotAuthException();
         }
     }

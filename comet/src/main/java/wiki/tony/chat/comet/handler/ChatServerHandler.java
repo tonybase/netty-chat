@@ -8,8 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import wiki.tony.chat.base.service.AuthService;
-import wiki.tony.chat.comet.bean.Constants;
 import wiki.tony.chat.comet.bean.Proto;
 import wiki.tony.chat.comet.exception.NotAuthException;
 import wiki.tony.chat.comet.manager.OperationManager;
@@ -37,7 +35,7 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<Proto> {
         // execute operation
         if (op != null) {
             LOG.debug(proto.toString());
-            op.action(ctx, proto);
+            op.action(ctx.channel(), proto);
         } else {
             LOG.warn("Not found operationId: " + proto.getOperation());
         }

@@ -1,5 +1,6 @@
 package wiki.tony.chat.comet.operation;
 
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,15 +31,15 @@ public class MessageOperation extends AbstractOperation {
     }
 
     @Override
-    public void action(ChannelHandlerContext ctx, Proto proto) throws Exception {
-        checkAuth(ctx);
+    public void action(Channel ch, Proto proto) throws Exception {
+        checkAuth(ch);
 
         Message msg = JsonUtils.fromJson(proto.getBody(), Message.class);
-        msg.setFrom(getUserId(ctx));
+        msg.setFrom(getUserId(ch));
         messageService.push(msg);
 
         proto.setOperation(OP_REPLY);
-        ctx.writeAndFlush(proto);
+        ch.writeAndFlush(proto);
 
     }
 

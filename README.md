@@ -22,3 +22,8 @@
 
     AuthOperation -> decode<AuthToken> -> AuthService
     MessageOperation -> decode<Message> -> MessageService
+
+### Test
+
+    Tcp: comet -> test -> ChatClient
+    WebSocket: comet -> test -> websocket -> demo.html
