@@ -17,8 +17,7 @@
 
 ### Architecture:
 
-![image](https://raw.githubusercontent.com/im-qq/netty-chat/master/docs/architecture.png | width=820)
-
+<img src="https://raw.githubusercontent.com/im-qq/netty-chat/master/docs/architecture.png" width="500">
 
 ### Operation:
 
