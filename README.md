@@ -1,12 +1,12 @@
 # netty-chat
 
-**Protocol:**<br>
+### Protocol:
 
 | PacketLen  | Header  | Actual Content |
 | :----: |:-------:| :-------------:|
-| 4byte  | 8byte   |   data  |
+| 4byte  | 12byte   |   data  |
 
-**Header:**
+###  Header:
 
 > PacketLen 包长度
 > HeaderLen 头长度
@@ -15,12 +15,12 @@
 > seqId     包递增号
 > body      业务数据
 
-**Architecture**
+### Architecture:
 
-![image](https://raw.githubusercontent.com/im-qq/netty-chat/master/docs/architecture.png)
+![image](https://raw.githubusercontent.com/im-qq/netty-chat/master/docs/architecture.png | width=820)
 
 
-**Operation**
+### Operation:
 
     AuthOperation -> decode<AuthToken> -> AuthService
     MessageOperation -> decode<Message> -> MessageService
