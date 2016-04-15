@@ -6,13 +6,13 @@
 | :----: |:-------:| :-------------:|
 | 4byte  | 12byte   |   data  |
 
-###  Header:
+###  Packet:
 - PacketLen 包长度
 - HeaderLen 头长度
-- version   版本号
-- operation 业务操作号
-- seqId     包递增号
-- body      业务数据
+- Version   版本号
+- Operation 业务操作号
+- SeqId     包递增号
+- Body      业务数据
 
 ### Architecture:
 
@@ -23,6 +23,13 @@
 
     AuthOperation -> decode<AuthToken> -> AuthService
     MessageOperation -> decode<Message> -> MessageService
+
+### MessageQueue
+
+    MQMessage
+    MQProducer
+    MQConsumer
+    MQMessageListener
 
 ### Test
 
