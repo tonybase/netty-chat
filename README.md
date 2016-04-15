@@ -17,6 +17,7 @@
 ### Architecture:
 
 <img src="https://raw.githubusercontent.com/im-qq/netty-chat/master/docs/architecture.png" width="500">
+<img src="https://raw.githubusercontent.com/im-qq/netty-chat/master/docs/proto.png" width="800">
 
 ### Operation:
 
