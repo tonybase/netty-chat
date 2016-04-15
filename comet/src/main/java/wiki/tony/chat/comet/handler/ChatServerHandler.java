@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import wiki.tony.chat.comet.bean.Proto;
 import wiki.tony.chat.comet.exception.NotAuthException;
-import wiki.tony.chat.comet.manager.OperationManager;
+import wiki.tony.chat.comet.ChatOperation;
 import wiki.tony.chat.comet.operation.Operation;
 
 /**
@@ -25,13 +25,13 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<Proto> {
     private static final Logger LOG = LoggerFactory.getLogger(ChatServerHandler.class);
 
     @Autowired
-    private OperationManager operationManager;
+    private ChatOperation chatOperation;
     @Value("${server.id}")
     private int serverId;
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Proto proto) throws Exception {
-        Operation op = operationManager.find(proto.getOperation());
+        Operation op = chatOperation.find(proto.getOperation());
         // execute operation
         if (op != null) {
             LOG.debug(proto.toString());

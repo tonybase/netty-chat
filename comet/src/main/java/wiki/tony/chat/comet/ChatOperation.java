@@ -1,5 +1,6 @@
-package wiki.tony.chat.comet.manager;
+package wiki.tony.chat.comet;
 
+import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -7,18 +8,17 @@ import org.springframework.stereotype.Component;
 import wiki.tony.chat.comet.operation.Operation;
 
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by Tony on 4/14/16.
  */
 @Component
-public class OperationManager {
+public class ChatOperation {
 
     @Autowired
     private ApplicationContext applicationContext;
 
-    private Map<Integer, Operation> ops = new ConcurrentHashMap<Integer, Operation>();
+    private Map<Integer, Operation> ops = Maps.newConcurrentMap();
 
     @Bean(name = "operations")
     public Map<Integer, Operation> operations() {
