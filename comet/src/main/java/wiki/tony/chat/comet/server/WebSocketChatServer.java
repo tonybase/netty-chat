@@ -63,7 +63,7 @@ public class WebSocketChatServer implements ChatServer {
     @Override
     public void shutdown() {
         if (channelFuture != null) {
-            channelFuture.channel().closeFuture();
+            channelFuture.channel().close().syncUninterruptibly();
         }
         if (bossGroup != null) {
             bossGroup.shutdownGracefully();
