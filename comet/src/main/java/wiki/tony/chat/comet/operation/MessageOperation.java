@@ -1,7 +1,6 @@
 package wiki.tony.chat.comet.operation;
 
 import io.netty.channel.Channel;
-import io.netty.channel.ChannelHandlerContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +34,7 @@ public class MessageOperation extends AbstractOperation {
         checkAuth(ch);
 
         Message msg = JsonUtils.fromJson(proto.getBody(), Message.class);
-        msg.setFrom(getUserId(ch));
+        msg.setFrom(getAuthToken(ch).getUserId());
         messageService.push(msg);
 
         proto.setOperation(OP_REPLY);

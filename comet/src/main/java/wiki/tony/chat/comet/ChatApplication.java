@@ -34,6 +34,8 @@ public class ChatApplication implements CommandLineRunner {
         try {
             tcpChatServer.start();
             webSocketChatServer.start();
+
+            Thread.currentThread().join();
         } catch (Exception e) {
             LOG.error("startup error!", e);
         }

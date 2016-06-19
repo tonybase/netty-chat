@@ -1,6 +1,7 @@
 package wiki.tony.chat.comet.operation;
 
 import io.netty.channel.Channel;
+import wiki.tony.chat.base.bean.AuthToken;
 import wiki.tony.chat.comet.bean.Constants;
 import wiki.tony.chat.comet.exception.NotAuthException;
 
@@ -9,16 +10,16 @@ import wiki.tony.chat.comet.exception.NotAuthException;
  */
 public abstract class AbstractOperation implements Operation {
 
-    protected Long getUserId(Channel ch) {
-        return ch.attr(Constants.KEY_USER_ID).get();
+    protected AuthToken getAuthToken(Channel ch) {
+        return ch.attr(Constants.KEY_USER_TOKEN).get();
     }
 
-    protected void setUserId(Channel ch, Long userId) {
-        ch.attr(Constants.KEY_USER_ID).set(userId);
+    protected void setAuthToken(Channel ch, AuthToken token) {
+        ch.attr(Constants.KEY_USER_TOKEN).set(token);
     }
 
     protected void checkAuth(Channel ch) throws NotAuthException {
-        if (getUserId(ch) == null) {
+        if (getAuthToken(ch) == null) {
             throw new NotAuthException();
         }
     }

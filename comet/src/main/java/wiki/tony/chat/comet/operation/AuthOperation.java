@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import wiki.tony.chat.base.bean.AuthToken;
-import wiki.tony.chat.base.bean.MQSubjectPrefix;
+import wiki.tony.chat.base.bean.MQTopics;
 import wiki.tony.chat.base.mq.MQConsumer;
 import wiki.tony.chat.base.mq.MQMessage;
 import wiki.tony.chat.base.mq.MQMessageListener;
@@ -43,13 +43,11 @@ public class AuthOperation extends AbstractOperation {
         AuthToken auth = JsonUtils.fromJson(proto.getBody(), AuthToken.class);
 
         // check token
-        Long userId = auth.getUserId();
-        String token = auth.getToken();
-        if (authService.auth(serverId, userId, token)) {
-            // put user id
-            setUserId(ch, userId);
+        if (authService.auth(serverId, auth)) {
+            // put auth token
+            setAuthToken(ch, auth);
             // message consumer
-            addConsumerListener(ch, userId);
+            addConsumerListener(ch, auth.getUserId());
             logger.debug("auth ok");
         } else {
             logger.debug("auth fail");
@@ -57,11 +55,10 @@ public class AuthOperation extends AbstractOperation {
 
         proto.setOperation(OP_REPLY);
         ch.writeAndFlush(proto);
-
     }
 
     private void addConsumerListener(final Channel ch, final Long userId) {
-        mqConsumer.addListener(MQSubjectPrefix.MESSAGE, userId + "", new MQMessageListener() {
+        mqConsumer.addListener(MQTopics.MESSAGE, userId + "", new MQMessageListener() {
             @Override
             public void onMessage(MQMessage message) {
                 Proto proto = new Proto();
