@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import wiki.tony.chat.base.bean.MQSubjectPrefix;
+import wiki.tony.chat.base.bean.MQTopics;
 import wiki.tony.chat.base.bean.Message;
 import wiki.tony.chat.base.mq.MQMessage;
 import wiki.tony.chat.base.mq.MQProducer;
@@ -28,7 +28,7 @@ public class MessageServiceImpl implements MessageService {
     public void push(Message msg) {
         logger.debug("producer:{} ", msg);
 
-        MQMessage mqMessage = mqProducer.createMessage(MQSubjectPrefix.MESSAGE + msg.getTo());
+        MQMessage mqMessage = mqProducer.createMessage(MQTopics.MESSAGE + msg.getTo());
         try {
             mqMessage.setData(JsonUtils.toJson(msg).getBytes());
             mqProducer.sendMessage(mqMessage);

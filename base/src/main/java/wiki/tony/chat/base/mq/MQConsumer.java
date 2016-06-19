@@ -5,5 +5,5 @@ package wiki.tony.chat.base.mq;
  * @version $Id$
  */
 public interface MQConsumer {
-    void addListener(String subject, String consumeGroup, MQMessageListener messageListener);
+    void addListener(String topic, String consumeGroup, MQMessageListener messageListener);
 }

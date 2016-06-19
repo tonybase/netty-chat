@@ -23,7 +23,7 @@ public class TestMQProxy {
     }
 
     public void sendMessage(MQMessage message) {
-        MQMessageListener listener = consumerListener.get(message.getSubject());
+        MQMessageListener listener = consumerListener.get(message.getTopic());
         if (listener != null) {
             listener.onMessage(message);
         } else {

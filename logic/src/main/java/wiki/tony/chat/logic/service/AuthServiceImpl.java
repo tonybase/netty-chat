@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Component;
+import wiki.tony.chat.base.bean.AuthToken;
 import wiki.tony.chat.base.service.AuthService;
 import wiki.tony.chat.logic.config.CachingConfig;
 
@@ -22,11 +23,15 @@ public class AuthServiceImpl implements AuthService {
     private CacheManager cacheManager;
 
     @Override
-    public boolean auth(int serverId, long userId, String token) {
-        cacheManager.getCache(CachingConfig.ONLINE).put(userId, serverId);
+    public boolean auth(int serverId, AuthToken authToken) {
+        cacheManager.getCache(CachingConfig.ONLINE).put(authToken.getUserId(), serverId);
 
-        logger.debug("auth serverId={}, userId={}, token={}", serverId, userId, token);
+        logger.debug("auth serverId={}, userId={}, token={}", serverId, authToken.getUserId(), authToken.getToken());
         return true;
     }
 
+    @Override
+    public boolean quit(int serverId, AuthToken authToken) {
+        return true;
+    }
 }

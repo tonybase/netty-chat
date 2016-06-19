@@ -7,19 +7,19 @@
 | 4byte  | 12byte   |   data  |
 
 ###  Packet:
-- PacketLen 包长度
-- HeaderLen 头长度
-- Version   版本号
-- Operation 业务操作号
-- SeqId     包递增号
-- Body      业务数据
+- PacketLen
+- HeaderLen
+- Version
+- Operation
+- SeqId
+- Body
 
 ### Architecture:
 
 <img src="https://raw.githubusercontent.com/im-qq/netty-chat/master/docs/architecture.png" width="500">
 <img src="https://raw.githubusercontent.com/im-qq/netty-chat/master/docs/proto.png" width="800">
 
-### Operation:
+### Operation
 
     AuthOperation -> decode<AuthToken> -> AuthService
     MessageOperation -> decode<Message> -> MessageService
@@ -30,6 +30,11 @@
     MQProducer
     MQConsumer
     MQMessageListener
+
+### Run
+
+    mvn install
+    comet: mvn spring-boot:run
 
 ### Test
 

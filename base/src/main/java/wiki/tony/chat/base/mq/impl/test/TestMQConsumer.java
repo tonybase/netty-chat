@@ -9,8 +9,8 @@ import wiki.tony.chat.base.mq.MQMessageListener;
 public class TestMQConsumer implements MQConsumer {
 
     @Override
-    public void addListener(String subjectPrefix, String consumeGroup, MQMessageListener messageListener) {
-        TestMQProxy.instance().addListener(subjectPrefix, consumeGroup, messageListener);
+    public void addListener(String topic, String consumeGroup, MQMessageListener messageListener) {
+        TestMQProxy.instance().addListener(topic, consumeGroup, messageListener);
     }
 
 }

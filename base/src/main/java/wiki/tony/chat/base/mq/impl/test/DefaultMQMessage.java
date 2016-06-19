@@ -10,7 +10,7 @@ import java.util.Date;
  */
 public class DefaultMQMessage implements MQMessage {
     private String id;
-    private String subject;
+    private String topic;
     private byte[] data;
     private Date createTime = new Date();
 
@@ -20,12 +20,12 @@ public class DefaultMQMessage implements MQMessage {
     }
 
     @Override
-    public String getSubject() {
-        return this.subject;
+    public String getTopic() {
+        return this.topic;
     }
 
-    public void setSubject(String subject) {
-        this.subject = subject;
+    public void setTopic(String topic) {
+        this.topic = topic;
     }
 
     @Override

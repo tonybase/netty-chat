@@ -9,9 +9,9 @@ import wiki.tony.chat.base.mq.MQProducer;
 public class TestMQProducer implements MQProducer {
 
     @Override
-    public MQMessage createMessage(String subject) {
+    public MQMessage createMessage(String topic) {
         DefaultMQMessage message = new DefaultMQMessage();
-        message.setSubject(subject);
+        message.setTopic(topic);
         return message;
     }
 

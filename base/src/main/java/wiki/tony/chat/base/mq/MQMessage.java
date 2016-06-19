@@ -10,7 +10,7 @@ public interface MQMessage {
 
     String getId();
 
-    String getSubject();
+    String getTopic();
 
     Date getCreateTime();
 

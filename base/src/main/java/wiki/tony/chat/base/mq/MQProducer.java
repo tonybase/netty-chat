@@ -6,7 +6,7 @@ package wiki.tony.chat.base.mq;
  */
 public interface MQProducer {
 
-    MQMessage createMessage(String subject);
+    MQMessage createMessage(String topic);
 
     void sendMessage(MQMessage message);
     
