@@ -37,4 +37,8 @@ public class MessageServiceImpl implements MessageService {
         }
     }
 
+    public void test() {
+        System.out.println("--dubbo test--");
+    }
+
 }

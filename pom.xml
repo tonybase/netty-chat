@@ -23,6 +23,7 @@
         <skipTests>true</skipTests>
         <spring.version>4.2.5.RELEASE</spring.version>
         <netty.version>5.0.0.Alpha2</netty.version>
+        <dubbo.version>2.5.3</dubbo.version>
         <org.slf4j.version>1.7.5</org.slf4j.version>
         <logback.version>1.0.13</logback.version>
         <jackson.version>2.7.3</jackson.version>
@@ -66,6 +67,13 @@
                 <groupId>com.google.protobuf</groupId>
                 <artifactId>protobuf-java</artifactId>
                 <version>${protobuf.version}</version>
+            </dependency>
+
+            <!-- dubbo -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>dubbo</artifactId>
+                <version>${dubbo.version}</version>
             </dependency>
 
             <!-- tools -->

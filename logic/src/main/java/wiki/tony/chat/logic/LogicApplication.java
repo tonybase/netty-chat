@@ -1,4 +1,4 @@
-package wiki.tony.chat.comet;
+package wiki.tony.chat.logic;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,28 +14,19 @@ import javax.annotation.Resource;
  * 程序入口
  */
 @SpringBootApplication
-//组件扫描
-@ComponentScan("wiki.tony.chat")
 @ImportResource("classpath:spring-dubbo.xml")
-public class ChatApplication implements CommandLineRunner {
+public class LogicApplication implements CommandLineRunner {
 
-    private static Logger LOG = LoggerFactory.getLogger(ChatApplication.class);
+    private static Logger LOG = LoggerFactory.getLogger(LogicApplication.class);
 
-    @Resource(name = "tcpChatServer")
-    private ChatServer tcpChatServer;
-    @Resource(name = "webSocketChatServer")
-    private ChatServer webSocketChatServer;
 
     public static void main(String[] args) {
-        SpringApplication.run(ChatApplication.class, args);
+        SpringApplication.run(LogicApplication.class, args);
     }
 
     @Override
     public void run(String... strings) throws Exception {
         try {
-            tcpChatServer.start();
-            webSocketChatServer.start();
-
             Thread.currentThread().join();
         } catch (Exception e) {
             LOG.error("startup error!", e);
