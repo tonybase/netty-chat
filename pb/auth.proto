@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option java_package = "wiki.tony.chat.base.pb";
+option java_outer_classname = "Auth";
+option optimize_for = LITE_RUNTIME;
+
+message AuthReq {
+    uint32 uid = 1;
+    string token = 2;
+}
+
+message AuthResp {
+    uint32 uid = 1;
+    uint32 code = 2;
+    string message = 3;
+}
