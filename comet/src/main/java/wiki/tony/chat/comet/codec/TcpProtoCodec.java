@@ -13,9 +13,7 @@ import wiki.tony.chat.comet.bean.Proto;
 import java.util.List;
 
 /**
- * tcp codec
- * <p>
- * Created by Tony on 4/14/16.
+ * TCP协议加解密
  */
 @Component
 @ChannelHandler.Sharable

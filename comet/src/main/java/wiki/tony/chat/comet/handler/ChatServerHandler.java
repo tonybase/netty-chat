@@ -16,9 +16,7 @@ import wiki.tony.chat.comet.ChatOperation;
 import wiki.tony.chat.comet.operation.Operation;
 
 /**
- * netty handler
- * <p>
- * Created by Tony on 4/13/16.
+ * 消息处理类
  */
 @Component
 @ChannelHandler.Sharable

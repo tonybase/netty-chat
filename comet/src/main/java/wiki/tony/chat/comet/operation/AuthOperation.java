@@ -17,7 +17,7 @@ import wiki.tony.chat.base.util.JsonUtils;
 import wiki.tony.chat.comet.bean.Proto;
 
 /**
- * Created by Tony on 4/14/16.
+ * 认证操作
  */
 @Component
 public class AuthOperation extends AbstractOperation {

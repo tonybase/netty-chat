@@ -10,11 +10,10 @@ import org.springframework.context.annotation.ComponentScan;
 import javax.annotation.Resource;
 
 /**
- * chat application
- * <p>
- * Created by Tony on 4/13/16.
+ * 程序入口
  */
 @SpringBootApplication
+//组件扫描
 @ComponentScan("wiki.tony.chat")
 public class ChatApplication implements CommandLineRunner {
 

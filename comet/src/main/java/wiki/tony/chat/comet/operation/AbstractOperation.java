@@ -6,7 +6,7 @@ import wiki.tony.chat.comet.bean.Constants;
 import wiki.tony.chat.comet.exception.NotAuthException;
 
 /**
- * Created by Tony on 4/14/16.
+ * 操作类抽象方法
  */
 public abstract class AbstractOperation implements Operation {
 

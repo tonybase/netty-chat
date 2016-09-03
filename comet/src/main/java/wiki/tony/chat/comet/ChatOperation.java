@@ -10,7 +10,7 @@ import wiki.tony.chat.comet.operation.Operation;
 import java.util.Map;
 
 /**
- * Created by Tony on 4/14/16.
+ * 聊天操作
  */
 @Component
 public class ChatOperation {

@@ -13,9 +13,7 @@ import wiki.tony.chat.comet.bean.Proto;
 import java.util.List;
 
 /**
- * websocket codec
- * <p>
- * Created by Tony on 4/14/16.
+ * WebSocket 协议加解密
  */
 @Component
 @ChannelHandler.Sharable

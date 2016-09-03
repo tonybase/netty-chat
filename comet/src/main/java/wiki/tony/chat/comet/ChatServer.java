@@ -1,7 +1,7 @@
 package wiki.tony.chat.comet;
 
 /**
- * Created by Tony on 4/13/16.
+ * 聊天服务接口
  */
 public interface ChatServer {
 

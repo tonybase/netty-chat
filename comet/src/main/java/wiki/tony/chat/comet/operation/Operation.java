@@ -5,7 +5,7 @@ import io.netty.channel.ChannelHandlerContext;
 import wiki.tony.chat.comet.bean.Proto;
 
 /**
- * Created by Tony on 4/14/16.
+ * 操作类
  */
 public interface Operation {
 

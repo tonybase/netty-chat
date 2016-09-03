@@ -2,14 +2,11 @@ package wiki.tony.chat.comet.bean;
 
 /**
  * 协议
- * <p>
- * Created by Tony on 4/13/16.
  */
 public class Proto {
 
     public static final short HEADER_LENGTH = 16;
     public static final short VERSION = 1;
-
     private int packetLen;
     private short headerLen;
     private short version;

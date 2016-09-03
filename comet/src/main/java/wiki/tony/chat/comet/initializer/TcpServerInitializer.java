@@ -7,9 +7,7 @@ import wiki.tony.chat.comet.codec.TcpProtoCodec;
 import wiki.tony.chat.comet.handler.ChatServerHandler;
 
 /**
- * netty initializer
- * <p>
- * Created by Tony on 4/13/16.
+ * TCP服务初始化类
  */
 @Component
 public class TcpServerInitializer extends ChannelInitializer {
