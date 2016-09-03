@@ -9,4 +9,6 @@ public interface MessageService {
 
     void push(Message msg);
 
+    void test();
+
 }

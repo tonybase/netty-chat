@@ -14,7 +14,6 @@ import javax.annotation.Resource;
  * 程序入口
  */
 @SpringBootApplication
-@ImportResource("classpath:spring-dubbo.xml")
 public class LogicApplication implements CommandLineRunner {
 
     private static Logger LOG = LoggerFactory.getLogger(LogicApplication.class);

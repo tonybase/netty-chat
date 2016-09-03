@@ -7,6 +7,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ImportResource;
+import wiki.tony.chat.base.service.MessageService;
 
 import javax.annotation.Resource;
 
@@ -16,7 +17,6 @@ import javax.annotation.Resource;
 @SpringBootApplication
 //组件扫描
 @ComponentScan("wiki.tony.chat")
-@ImportResource("classpath:spring-dubbo.xml")
 public class ChatApplication implements CommandLineRunner {
 
     private static Logger LOG = LoggerFactory.getLogger(ChatApplication.class);
@@ -26,9 +26,9 @@ public class ChatApplication implements CommandLineRunner {
     @Resource(name = "webSocketChatServer")
     private ChatServer webSocketChatServer;
 
-    public static void main(String[] args) {
-        SpringApplication.run(ChatApplication.class, args);
-    }
+    @Resource
+    private MessageService service;
+
 
     @Override
     public void run(String... strings) throws Exception {
