@@ -1,5 +1,6 @@
 package wiki.tony.chat.comet.client;
 
+import com.google.protobuf.ByteString;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -7,9 +8,9 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import wiki.tony.chat.base.bean.AuthToken;
-import wiki.tony.chat.base.bean.Message;
 import wiki.tony.chat.base.bean.Proto;
+import wiki.tony.chat.base.pb.Auth;
+import wiki.tony.chat.base.pb.Message;
 import wiki.tony.chat.base.util.JsonUtils;
 import wiki.tony.chat.comet.codec.TcpProtoCodec;
 
@@ -41,22 +42,25 @@ public class ChatClient {
 
             ChannelFuture f = b.connect().sync();
 
-            AuthToken auth = new AuthToken();
-            auth.setUserId(2);
-            auth.setToken("test2");
+            Auth.AuthReq authReq = Auth.AuthReq.newBuilder()
+                    .setUid(1)
+                    .setToken("test")
+                    .build();
             Proto proto = new Proto();
             proto.setVersion((short) 1);
             proto.setOperation(0);
-            proto.setBody(JsonUtils.toJson(auth).getBytes());
+            proto.setBody(authReq.toByteArray());
             f.channel().writeAndFlush(proto);
 
-            Message msg = new Message();
-            msg.setTo(1L);
-            msg.setContent("hello1");
+            Message.MsgData msgData= Message.MsgData.newBuilder()
+                    .setTo(1)
+                    .setType(Message.MsgType.SINGLE_TEXT)
+                    .setData(ByteString.copyFromUtf8("TEST"))
+                    .build();
             proto = new Proto();
             proto.setVersion((short) 1);
             proto.setOperation(2);
-            proto.setBody(JsonUtils.toJson(msg).getBytes());
+            proto.setBody(msgData.toByteArray());
             f.channel().writeAndFlush(proto);
 
             f.channel().closeFuture().sync();

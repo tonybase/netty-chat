@@ -28,7 +28,6 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public String auth(int serverId, Proto proto) throws ConnectionAuthException {
-        System.out.println("==auth===");
         Auth.AuthReq req;
         try {
             req = Auth.AuthReq.parseFrom(proto.getBody());
@@ -44,6 +43,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public boolean quit(int serverId, String key) {
+        logger.debug("client quit uid={}, key={}", serverId, key);
         return true;
     }
 

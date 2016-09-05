@@ -1,0 +1,3 @@
+logging:
+  level:
+    wiki.tony: DEBUG

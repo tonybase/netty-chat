@@ -12,10 +12,6 @@
     <artifactId>netty-chat-comet</artifactId>
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
         <!-- modules -->
         <dependency>
             <groupId>wiki.tony.chat</groupId>
@@ -48,6 +44,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
         <!-- zookeeper -->
         <dependency>
             <groupId>org.apache.zookeeper</groupId>
@@ -80,6 +77,10 @@
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
         </dependency>
     </dependencies>
 
