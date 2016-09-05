@@ -6,8 +6,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.ImportResource;
-import wiki.tony.chat.base.service.MessageService;
 
 import javax.annotation.Resource;
 
@@ -15,6 +13,7 @@ import javax.annotation.Resource;
  * 程序入口
  */
 @SpringBootApplication
+@ComponentScan("wiki.tony.chat.comet")
 public class ChatApplication implements CommandLineRunner {
 
     private static Logger LOG = LoggerFactory.getLogger(ChatApplication.class);
@@ -24,8 +23,6 @@ public class ChatApplication implements CommandLineRunner {
     @Resource(name = "webSocketChatServer")
     private ChatServer webSocketChatServer;
 
-    @Resource
-    private MessageService service;
 
     public static void main(String[] args) {
         SpringApplication.run(ChatApplication.class, args);

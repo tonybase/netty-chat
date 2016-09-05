@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import wiki.tony.chat.base.bean.Proto;
 import wiki.tony.chat.base.pb.Message;
-import wiki.tony.chat.base.service.MessageService;
+import wiki.tony.chat.base.service.MsgService;
 
 /**
  * 消息服务
@@ -14,7 +14,7 @@ import wiki.tony.chat.base.service.MessageService;
  * Created by Tony on 4/14/16.
  */
 @Component
-public class MessageServiceImpl implements MessageService {
+public class MessageServiceImpl implements MsgService {
 
     private Logger logger = LoggerFactory.getLogger(MessageServiceImpl.class);
 

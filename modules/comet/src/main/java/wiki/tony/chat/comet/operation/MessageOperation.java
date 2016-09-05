@@ -5,9 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import wiki.tony.chat.base.bean.Message;
-import wiki.tony.chat.base.service.MessageService;
-import wiki.tony.chat.base.util.JsonUtils;
+import wiki.tony.chat.base.service.MsgService;
 import wiki.tony.chat.base.bean.Proto;
 
 /**
@@ -22,7 +20,7 @@ public class MessageOperation extends AbstractOperation {
     public static final int OP_REPLY = 3;
 
     @Autowired
-    private MessageService messageService;
+    private MsgService messageService;
 
     @Override
     public Integer op() {
