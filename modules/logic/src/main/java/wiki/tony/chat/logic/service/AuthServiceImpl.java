@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import wiki.tony.chat.base.bean.Proto;
 import wiki.tony.chat.base.exception.ConnectionAuthException;
 import wiki.tony.chat.base.pb.Auth;
@@ -17,7 +18,7 @@ import wiki.tony.chat.logic.config.CachingConfig;
  * <p>
  * Created by Tony on 4/14/16.
  */
-@Component
+@Service("authService")
 public class AuthServiceImpl implements AuthService {
 
     private Logger logger = LoggerFactory.getLogger(AuthServiceImpl.class);
@@ -27,6 +28,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public String auth(int serverId, Proto proto) throws ConnectionAuthException {
+        System.out.println("==auth===");
         Auth.AuthReq req;
         try {
             req = Auth.AuthReq.parseFrom(proto.getBody());

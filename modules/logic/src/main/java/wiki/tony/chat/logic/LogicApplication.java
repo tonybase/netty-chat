@@ -14,6 +14,8 @@ import javax.annotation.Resource;
  * 程序入口
  */
 @SpringBootApplication
+@ComponentScan("wiki.tony.chat.logic")
+@ImportResource("classpath:dubbo-provider.xml")
 public class LogicApplication implements CommandLineRunner {
 
     private static Logger LOG = LoggerFactory.getLogger(LogicApplication.class);
