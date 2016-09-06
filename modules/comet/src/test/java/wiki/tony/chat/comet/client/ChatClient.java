@@ -11,7 +11,6 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import wiki.tony.chat.base.bean.Proto;
 import wiki.tony.chat.base.pb.Auth;
 import wiki.tony.chat.base.pb.Message;
-import wiki.tony.chat.base.util.JsonUtils;
 import wiki.tony.chat.comet.codec.TcpProtoCodec;
 
 /**

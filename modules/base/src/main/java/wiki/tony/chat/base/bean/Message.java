@@ -1,7 +1,7 @@
 package wiki.tony.chat.base.bean;
 
 /**
- * Created by Tony on 4/14/16.
+ * 消息类
  */
 public class Message {
 

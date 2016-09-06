@@ -3,7 +3,7 @@ package wiki.tony.chat.base.bean;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Created by Tony on 4/14/16.
+ * 用户验证类
  */
 public class AuthToken {
 

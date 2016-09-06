@@ -3,7 +3,7 @@ package wiki.tony.chat.base.bean;
 import java.io.Serializable;
 
 /**
- * 协议
+ * 协议类
  */
 public class Proto implements Serializable {
 
