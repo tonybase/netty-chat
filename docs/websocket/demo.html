@@ -17,8 +17,6 @@
         const rawHeaderLen = 16;
         const packetOffset = 0, headerOffset = 4, verOffset = 6, opOffset = 8, seqOffset = 12;
         const opAuth = 1, opAuthReply=2, opHeartbeat=3, opHeartbeatReply=4, opMessage=5, opMessageReply=6;
-        var textDecoder = new TextDecoder();
-        var textEncoder = new TextEncoder();
         var heartbeatInterval;
         function connect() {
             var ws = new WebSocket('ws://127.0.0.1:8090/chat');
@@ -46,7 +44,7 @@
                     break;
                     case opHeartbeatReply:
                         // 心跳
-                        console.log("heartbeat");
+                        console.log("heartbeat ok");
                     break;
                     case opMessageReply:
                         // 消息
@@ -56,7 +54,7 @@
                         for (var offset=0; offset<msg.byteLength; offset+=packetLen) {
                             packetLen = packetView.getInt32(offset);
                             headerLen = packetView.getInt16(offset+headerOffset);
-                            msgBody = textDecoder.decode(msg.slice(offset+headerLen, offset+packetLen));
+                            msgBody = msg.slice(offset+headerLen, offset+packetLen);
                             console.log("len=" + msg.byteLength, "offset=" + offset, "body=" + msgBody);
                             recevice(JSON.parse(msgBody));
                         }
@@ -85,18 +83,19 @@
 
             function auth() {
                 var authReq = new AuthReq();
+                authReq.uid = 1;
+                authReq.token = "test";
+
                 var headerBuf = new ArrayBuffer(rawHeaderLen);
                 var headerView = new DataView(headerBuf, 0);
+                var bodyBuf = authReq.toArrayBuffer()
                 headerView.setInt32(packetOffset, rawHeaderLen + bodyBuf.byteLength);
                 headerView.setInt16(headerOffset, rawHeaderLen);
                 headerView.setInt16(verOffset, 1);
                 headerView.setInt32(opOffset, opAuth);
                 headerView.setInt32(seqOffset, 1);
 
-                authReq.uid = 1;
-                authReq.token = "test";
-
-                ws.send(mergeArrayBuffer(headerBuf, authReq.toArrayBuffer()));
+                ws.send(mergeArrayBuffer(headerBuf, bodyBuf));
             }
 
             function recevice(body) {

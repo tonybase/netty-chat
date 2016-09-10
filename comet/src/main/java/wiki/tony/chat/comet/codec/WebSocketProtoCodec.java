@@ -1,15 +1,12 @@
 package wiki.tony.chat.comet.codec;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageCodec;
-import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketFrame;
+import io.netty.handler.codec.http.websocketx.BinaryWebSocketFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -44,7 +41,7 @@ public class WebSocketProtoCodec extends MessageToMessageCodec<WebSocketFrame, P
             byteBuf.writeInt(proto.getSeqId());
         }
 
-        list.add(byteBuf);
+        list.add(new BinaryWebSocketFrame(byteBuf));
 
         logger.debug("encode: {}", proto);
     }
