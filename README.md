@@ -34,6 +34,7 @@
 ### Run
 
     mvn install
+    logic: mvn spring-boot:run
     comet: mvn spring-boot:run
 
 ### Test
