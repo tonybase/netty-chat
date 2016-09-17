@@ -21,7 +21,7 @@ import wiki.tony.chat.comet.initializer.WebSocketServerInitializer;
 @Component("webSocketChatServer")
 public class WebSocketChatServer implements ChatServer {
 
-    private Logger logger = LoggerFactory.getLogger(TcpChatServer.class);
+    private Logger logger = LoggerFactory.getLogger(WebSocketChatServer.class);
 
     @Value("${server.websocket.port:9090}")
     private int port;
