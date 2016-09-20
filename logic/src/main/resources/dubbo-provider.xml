@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+    http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd"
+       default-lazy-init="false">
+    <dubbo:application name="dubbo-provider"></dubbo:application>
+    <dubbo:annotation package="wiki.tony.chat.logic.service.*"/>
+    <!-- 使用zookeeper注册中心暴露服务地址 -->
+    <dubbo:registry address="zookeeper://s.tony.wiki:2181" check="false" subscribe="false"
+                    register=""></dubbo:registry>
+    <!-- 要暴露的服务接口 -->
+    <dubbo:service interface="wiki.tony.chat.base.service.MsgService" ref="msgService"/>
+    <dubbo:service interface="wiki.tony.chat.base.service.AuthService" ref="authService"/>
+</beans>

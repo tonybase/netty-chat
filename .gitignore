@@ -1,11 +1,34 @@
-# Build artifacts
-artifacts
-target
+kdiff3 ignore
+*.orig
 
-# IDE & module files
-.idea
-*.iml
+# maven ignore
+target/
+
+# eclipse ignore
+.settings/
 .project
-.settings
 .classpath
-workspace.xml
+
+# idea ignore
+.idea/
+*.ipr
+*.iml
+*.iws
+
+# temp ignore
+*.log
+*.cache
+*.diff
+*.patch
+*.tmp
+
+# system ignore
+.DS_Store
+Thumbs.db
+
+# package ignore (optional)
+# *.jar
+# *.war
+# *.zip
+# *.tar
+# *.tar.gz
