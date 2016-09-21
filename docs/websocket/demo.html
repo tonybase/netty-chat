@@ -1,0 +1,127 @@
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>client demo</title>
+    <script src="./js/long.min.js"></script>
+    <script src="./js/bytebuffer.min.js"></script>
+    <script src="./js/protobuf.min.js"></script>
+</head>
+<body>
+    <h1>client demo</h1>
+    <script>
+        var ProtoBuf = dcodeIO.ProtoBuf;
+        var AuthReq = ProtoBuf.loadProtoFile("../pb/auth.proto").build("AuthReq");
+
+        const rawHeaderLen = 16;
+        const packetOffset = 0, headerOffset = 4, verOffset = 6, opOffset = 8, seqOffset = 12;
+        const opAuth = 1, opAuthReply=2, opHeartbeat=3, opHeartbeatReply=4, opMessage=5, opMessageReply=6;
+        var heartbeatInterval;
+        function connect() {
+            var ws = new WebSocket('ws://127.0.0.1:8090/chat');
+            ws.binaryType = 'arraybuffer';
+            ws.onopen = function() {
+                auth();
+            }
+
+            ws.onmessage = function(evt) {
+                var data = evt.data;
+                var dataView = new DataView(data, 0);
+                var packetLen = dataView.getInt32(packetOffset);
+                var headerLen = dataView.getInt16(headerOffset);
+                var ver = dataView.getInt16(verOffset);
+                var op = dataView.getInt32(opOffset);
+                var seq = dataView.getInt32(seqOffset);
+
+                console.log("packetLen=" + packetLen, "headerLen=" + headerLen, "ver=" + ver, "op=" + op, "seq=" + seq);
+
+                switch(op) {
+                    case opAuthReply:
+                        // 授权成功
+                        heartbeat();
+                        heartbeatInterval = setInterval(heartbeat, 30 * 1000);
+                    break;
+                    case opHeartbeatReply:
+                        // 心跳
+                        console.log("heartbeat ok");
+                    break;
+                    case opMessageReply:
+                        // 消息
+                        var packetView = dataView;
+                        var msg = data;
+                        var msgBody;
+                        for (var offset=0; offset<msg.byteLength; offset+=packetLen) {
+                            packetLen = packetView.getInt32(offset);
+                            headerLen = packetView.getInt16(offset+headerOffset);
+                            msgBody = msg.slice(offset+headerLen, offset+packetLen);
+                            console.log("len=" + msg.byteLength, "offset=" + offset, "body=" + msgBody);
+                            recevice(JSON.parse(msgBody));
+                        }
+                    break;
+                }
+            }
+
+            ws.onclose = function() {
+                if (heartbeatInterval) clearInterval(heartbeatInterval);
+                // 重连 3s~5s
+                var delay = Math.floor(Math.random() * (6 - 3) + 3);
+                setTimeout(connect, delay * 1000);
+                console.log(delay);
+            }
+
+            function heartbeat() {
+                var headerBuf = new ArrayBuffer(rawHeaderLen);
+                var headerView = new DataView(headerBuf, 0);
+                headerView.setInt32(packetOffset, rawHeaderLen);
+                headerView.setInt16(headerOffset, rawHeaderLen);
+                headerView.setInt16(verOffset, 1);
+                headerView.setInt32(opOffset, opHeartbeat);
+                headerView.setInt32(seqOffset, 1);
+                ws.send(headerBuf);
+            }
+
+            function auth() {
+                var authReq = new AuthReq();
+                authReq.uid = 1;
+                authReq.token = "test";
+
+                var headerBuf = new ArrayBuffer(rawHeaderLen);
+                var headerView = new DataView(headerBuf, 0);
+                var bodyBuf = authReq.toArrayBuffer()
+                headerView.setInt32(packetOffset, rawHeaderLen + bodyBuf.byteLength);
+                headerView.setInt16(headerOffset, rawHeaderLen);
+                headerView.setInt16(verOffset, 1);
+                headerView.setInt32(opOffset, opAuth);
+                headerView.setInt32(seqOffset, 1);
+
+                ws.send(mergeArrayBuffer(headerBuf, bodyBuf));
+            }
+
+            function recevice(body) {
+                console.log(body);
+            }
+
+            function mergeArrayBuffer(ab1, ab2) {
+                var u81 = new Uint8Array(ab1),
+                    u82 = new Uint8Array(ab2),
+                    res = new Uint8Array(ab1.byteLength + ab2.byteLength);
+                res.set(u81, 0);
+                res.set(u82, ab1.byteLength);
+                return res.buffer;
+            }
+
+            function char2ab(str) {
+                var buf = new ArrayBuffer(str.length);
+                var bufView = new Uint8Array(buf);
+                for (var i=0; i<str.length; i++) {
+                    bufView[i] = str[i];
+                }
+                return buf;
+            }
+
+        }
+        connect();
+    </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+option java_package = "wiki.tony.chat.base.pb";
+option java_outer_classname = "Message";
+option optimize_for = LITE_RUNTIME;
+
+enum MsgType {
+    SINGLE_TEXT    = 0;
+    SINGLE_AUDIO   = 1;
+    GROUP_TEXT     = 2;
+    GROUP_AUDIO    = 3;
+}
+
+message MsgData {
+    uint32 to = 1;
+    uint32 from = 2;
+    uint32 ctime = 3;
+    MsgType type = 4;
+    bytes data = 5;
+}
+
+message MsgNotify {
+    uint32 seq = 1;
+}
+
+message MsgSync {
+    uint32 seq = 1;
+}
+
+message MsgSyncData {
+    repeated MsgData messages = 1;
+}

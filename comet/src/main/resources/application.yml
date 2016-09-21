@@ -1,0 +1,10 @@
+server:
+  id: 1
+  tcp:
+    port: 9090
+  websocket:
+    port: 8090
+
+logging:
+  level:
+    wiki.tony: DEBUG
