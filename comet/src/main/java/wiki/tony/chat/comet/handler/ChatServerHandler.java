@@ -33,37 +33,6 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<Proto> {
     private int serverId;
 
     /**
-     * 心跳处理
-     *
-     * @param ctx 连接上下文
-     * @param evt 状态事件
-     * @throws Exception 异常
-     */
-    @Override
-    public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
-
-        if (evt instanceof IdleStateEvent) {
-            IdleStateEvent event = (IdleStateEvent) evt;
-            switch (event.state()) {
-                case READER_IDLE:
-                    //读超时 直接关闭连接
-                    ctx.close();
-                    LOG.info("READER_IDLE 读超时");
-                    break;
-                case WRITER_IDLE:
-                    //写超时 TODO 重新发送心跳包
-                    LOG.info("WRITER_IDLE 写超时");
-                    break;
-                case ALL_IDLE:
-                    //总超时 直接关闭连接
-                    ctx.close();
-                    LOG.info("ALL_IDLE 总超时");
-                    break;
-            }
-        }
-    }
-
-    /**
      * 客户端连接
      *
      * @param ctx 上下文
@@ -107,8 +76,17 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<Proto> {
         }
     }
 
+    /**
+     * 异常消息
+     *
+     * @param ctx   通道上下文
+     * @param cause 线程
+     * @throws Exception 异常
+     */
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        LOG.error("exceptionCaught", cause);
+        LOG.error("异常消息", cause);
+        ctx.close();
     }
+
 }
