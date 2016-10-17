@@ -58,7 +58,7 @@ public class ChatClient {
                     .build();
             proto = new Proto();
             proto.setVersion((short) 1);
-            proto.setOperation(2);
+            proto.setOperation(5);
             proto.setBody(msgData.toByteArray());
             f.channel().writeAndFlush(proto);
 

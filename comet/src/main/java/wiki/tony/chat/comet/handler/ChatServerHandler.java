@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import wiki.tony.chat.base.bean.Proto;
 import io.netty.channel.ChannelHandler.Sharable;
 import wiki.tony.chat.base.service.AuthService;
+import wiki.tony.chat.base.service.MsgService;
 import wiki.tony.chat.comet.ChatOperation;
 import wiki.tony.chat.comet.operation.Operation;
 
@@ -29,6 +30,8 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<Proto> {
     private ChatOperation chatOperation;
     @Autowired
     private AuthService authService;
+    @Autowired
+    private MsgService msgService;
     @Value("${server.id}")
     private int serverId;
 
@@ -71,6 +74,7 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<Proto> {
         if (op != null) {
             LOG.debug(proto.toString());
             op.action(ctx.channel(), proto);
+            msgService.receive(proto);
         } else {
             LOG.warn("Not found operationId: " + proto.getOperation());
         }
