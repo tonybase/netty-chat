@@ -18,7 +18,7 @@ public class MessageOperation extends AbstractOperation {
     private final Logger logger = LoggerFactory.getLogger(MessageOperation.class);
 
     @Autowired
-    private MsgService messageService;
+    private MsgService msgService;
 
     @Override
     public Integer op() {
@@ -30,7 +30,7 @@ public class MessageOperation extends AbstractOperation {
         checkAuth(ch);
 
         // receive a message
-        messageService.receive(proto);
+        msgService.receive(proto);
 
         // write message reply
         proto.setOperation(Constants.OP_MESSAGE_REPLY);

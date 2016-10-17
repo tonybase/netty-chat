@@ -2,13 +2,26 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
-    http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+       http://code.alibabatech.com/schema/dubbo
+       http://code.alibabatech.com/schema/dubbo/dubbo.xsd"
        default-lazy-init="false">
-    <dubbo:application name="dubbo-consumer"/>
-    <dubbo:registry address="zookeeper://s.tony.wiki:2181"/>
-    <dubbo:reference interface="wiki.tony.chat.base.service.MsgService" id="msgService"/>
-    <dubbo:reference interface="wiki.tony.chat.base.service.AuthService" id="authService"/>
+
+    <!-- 消费者基础配置 -->
+    <dubbo:application
+            name="${dubbo.application.name}"/>
+
+    <!-- 注册中心配置 -->
+    <dubbo:registry
+            protocol="${dubbo.registry.protocol}"
+            address="${dubbo.registry.address}"
+            port="${dubbo.registry.port}"/>
+
+    <!-- 引用配置 -->
+    <dubbo:reference interface="${dubbo.reference-1.interface}" id="msgService"/>
+    <dubbo:reference interface="${dubbo.reference-2.interface}" id="authService"/>
+
 </beans>
 
 

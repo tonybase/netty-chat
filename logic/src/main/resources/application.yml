@@ -1,3 +1,20 @@
 logging:
   level:
     wiki.tony: DEBUG
+dubbo:
+  application:
+    name: dubbo-provider
+  annotation:
+    package: wiki.tony.chat.logic.service.*
+  registry:
+    protocol: zookeeper
+    address: 127.0.0.1
+    port: 2181
+    check: false
+    subscribe: false
+  service-1:
+    interface: wiki.tony.chat.base.service.MsgService
+    ref: msgService
+  service-2:
+    interface: wiki.tony.chat.base.service.AuthService
+    ref: authService

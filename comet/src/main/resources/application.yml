@@ -4,7 +4,17 @@ server:
     port: 9090
   websocket:
     port: 8090
-
 logging:
   level:
     wiki.tony: DEBUG
+dubbo:
+  application:
+    name: dubbo-consumer
+  registry:
+    protocol: zookeeper
+    address: localhost
+    port: 2181
+  reference-1:
+    interface: wiki.tony.chat.base.service.MsgService
+  reference-2:
+    interface: wiki.tony.chat.base.service.AuthService
